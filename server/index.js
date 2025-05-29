@@ -123,40 +123,35 @@ async function run() {
   try {
     await client.connect();
 
+    // Database
+    const database = client.db("bajinewv2");
+
     // Collections
-    const usersCollection = client.db("bajinew").collection("users");
-    const depositsCollection = client.db("bajinew").collection("deposits");
-    const withdrawsCollection = client.db("bajinew").collection("withdraws");
-    const homeControlCollection = client
-      .db("bajinew")
-      .collection("homeControls");
-    const categoryCollection = client.db("bajinew").collection("categories");
-    const subCategoryCollection = client
-      .db("bajinew")
-      .collection("subCategories");
-    const homeGamesCollection = client.db("bajinew").collection("homeGames");
-    const kycCollection = client.db("bajinew").collection("kyc");
-    const promotionCollection = client.db("bajinew").collection("promotions");
-    const promotionCategoryCollection = client
-      .db("bajinew")
-      .collection("promotion-categories");
-    const pagesCollection = client.db("bajinew").collection("pages");
-    const paymentNumberCollection = client
-      .db("bajinew")
-      .collection("payment-numbers");
-    const paymentMethodCollection = client
-      .db("bajinew")
-      .collection("payment-methods");
-    const withdrawMethodCollection = client
-      .db("bajinew")
-      .collection("withdraw-methods");
-    const referCodesCollection = client.db("bajinew").collection("refer-links");
-    const commissionsCollection = client
-      .db("bajinew")
-      .collection("commissions");
+    const usersCollection = database.collection("users");
+    const depositsCollection = database.collection("deposits");
+    const withdrawsCollection = database.collection("withdraws");
+    const homeControlCollection = database.collection("homeControls");
+    const categoryCollection = database.collection("categories");
+    const subCategoryCollection = database.collection("subCategories");
+    const homeGamesCollection = database.collection("homeGames");
+    const kycCollection = database.collection("kyc");
+    const promotionCollection = database.collection("promotions");
+    const promotionCategoryCollection = database.collection(
+      "promotion-categories"
+    );
+    const pagesCollection = database.collection("pages");
+    const paymentNumberCollection = database.collection("payment-numbers");
+    const paymentMethodCollection = database.collection("payment-methods");
+    const withdrawMethodCollection = database.collection("withdraw-methods");
+    const referCodesCollection = database.collection("refer-links");
+    const commissionsCollection = database.collection("commissions");
+    const balanceHistoryCollection = database.collection("balance-histories");
 
     // API routes
-    app.use("/users", usersApi(usersCollection, homeControlCollection));
+    app.use(
+      "/users",
+      usersApi(usersCollection, homeControlCollection, balanceHistoryCollection)
+    );
     app.use("/users", agentsApi(usersCollection, homeControlCollection));
     app.use("/users", affiliatesApi(usersCollection, homeControlCollection));
     app.use("/deposits", depositsApi(depositsCollection, usersCollection));
