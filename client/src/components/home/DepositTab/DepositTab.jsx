@@ -104,6 +104,27 @@ const DepositTab = () => {
       alert("Please select all fields before submitting.");
       return;
     }
+
+    // Validate required userInputs
+    const currentGateway = gateways?.find(
+      (g) => g.method === formData.paymentMethod
+    );
+
+    const requiredFields = currentGateway?.userInputs?.filter(
+      (input) => input.isRequired === "required"
+    );
+
+    const missingFields = requiredFields?.filter(
+      (field) =>
+        !dynamicInputs[field.name] || dynamicInputs[field.name].trim() === ""
+    );
+
+    if (missingFields?.length > 0) {
+      const missingLabels = missingFields.map((f) => f.label).join(", ");
+      toast.error(`Please fill required fields: ${missingLabels}`);
+      return;
+    }
+
     const totalAmount = formData.amount.reduce((acc, amt) => acc + amt, 0);
 
     let finalAmount = totalAmount;

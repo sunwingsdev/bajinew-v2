@@ -81,6 +81,7 @@ import Pages from "@/pages/pages-on-footer/Pages";
 import WithdrawMethod from "@/pages/dashboard/BankingWithdraw/WithdrawMethod";
 import EditWithdrawMethodForm from "@/components/dashboard/bankingWithdraw/withdrawMethod/EditWithdrawMethodForm";
 import SiteInfo from "@/pages/siteInfo/SiteInfo";
+import BalanceHistories from "@/pages/dashboard/users/BalanceHistories";
 
 const router = createBrowserRouter([
   {
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <AllUsers />,
+      },
+      {
+        path: "balance-histories",
+        element: <BalanceHistories />,
       },
       { path: "profile/:id", element: <AdminProfile /> },
       { path: "cashagent", element: <CashAgent /> },

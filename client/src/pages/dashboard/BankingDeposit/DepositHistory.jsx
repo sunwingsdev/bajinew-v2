@@ -211,19 +211,19 @@ const DepositHistory = () => {
                   {deposit.amount} ৳
                 </td>
                 <td className="p-3 border-r border-r-blue-300">
-                  <div>
-                    <p>
-                      <span className="font-medium">
-                        {deposit.userInputs?.senderNumber && "Number"}:
-                      </span>{" "}
-                      {deposit.userInputs?.senderNumber || "N/A"}
-                    </p>
-                    <p>
-                      <span className="font-medium">
-                        {deposit.userInputs?.transactionId && "Trnx ID"}:
-                      </span>{" "}
-                      {deposit.userInputs?.transactionId || "N/A"}
-                    </p>
+                  <div className="space-y-1">
+                    {deposit.userInputs
+                      ? Object.entries(deposit.userInputs).map(
+                          ([key, value]) => (
+                            <p key={key}>
+                              <span className="font-medium capitalize">
+                                {key.replace(/([A-Z])/g, " $1")}:
+                              </span>{" "}
+                              {value || "N/A"}
+                            </p>
+                          )
+                        )
+                      : "No data"}
                   </div>
                 </td>
                 <td className="p-3 border-r border-r-blue-300">
