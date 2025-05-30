@@ -1,6 +1,6 @@
 import Container from "@/components/shared/Container";
 import { useGetAllHomeGamesQuery } from "@/redux/features/allApis/homeGamesApi/homeGamesApi";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 
 // const games = [
 //   {

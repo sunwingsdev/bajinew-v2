@@ -2,13 +2,12 @@ import {
   useGetHomeControlsQuery,
   useUpdateSelectionMutation,
 } from "@/redux/features/allApis/homeControlApi/homeControlApi";
+import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
-import { useToasts } from "react-toast-notifications";
 
 const LogoSelectionSection = () => {
   const { data: homeControls, refetch } = useGetHomeControlsQuery();
   const [updateSelection] = useUpdateSelectionMutation();
-  const { addToast } = useToasts();
 
   const logoHomeControls = homeControls?.filter(
     (control) => control.category === "logo"
@@ -18,10 +17,7 @@ const LogoSelectionSection = () => {
     try {
       const result = await updateSelection(id);
       if (result.data) {
-        addToast(result.data.message, {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success(result.data.message);
       }
       refetch();
     } catch (error) {

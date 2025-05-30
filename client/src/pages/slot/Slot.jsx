@@ -1,5 +1,5 @@
 import GamePages from "@/components/GamePages";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router";
 
 const Slot = () => {
   const { menuItems } = useOutletContext();

@@ -1,13 +1,13 @@
 import { IoIosSearch } from "react-icons/io";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { ClipLoader } from "react-spinners";
-import { useToasts } from "react-toast-notifications";
 import { GiCheckMark } from "react-icons/gi";
 import { FaRegCopy } from "react-icons/fa";
 import { useGetAllReferCodesQuery } from "@/redux/features/allApis/referCodesApi/referCodesApi";
 import { useUpdateAffiliateStatusMutation } from "@/redux/features/allApis/usersApi/affiliatesApi";
 import TablePagination from "@/components/dashboard/TablePagination";
+import toast from "react-hot-toast";
 
 const AllAffiliateLinks = () => {
   const { data: allReferLinks, isLoading, error } = useGetAllReferCodesQuery();
@@ -17,7 +17,6 @@ const AllAffiliateLinks = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [copied, setCopied] = useState(null);
   const rowsPerPage = 10;
-  const { addToast } = useToasts();
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -54,10 +53,7 @@ const AllAffiliateLinks = () => {
     setCopied(text);
 
     // Show success toast for copying
-    addToast("Link copied to clipboard!", {
-      appearance: "success",
-      autoDismiss: true,
-    });
+    toast.success("Link copied to clipboard!");
 
     setTimeout(() => setCopied(null), 2000);
   };

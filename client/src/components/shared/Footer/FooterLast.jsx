@@ -1,7 +1,7 @@
 import logo1 from "../../../assets/v2/gaming_license.png";
 import logo2 from "../../../assets/v2/anjouan.png";
 import logo3 from "../../../assets/v2/android-en.png";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 
 const FooterLast = () => {

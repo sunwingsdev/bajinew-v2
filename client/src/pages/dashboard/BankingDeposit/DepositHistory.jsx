@@ -4,9 +4,9 @@ import {
   useUpdateDepositStatusMutation,
 } from "@/redux/features/allApis/depositsApi/depositsApi";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { Link } from "react-router";
 
 const DepositHistory = () => {
   const { data: allDeposits, isLoading, isError } = useGetDepositsQuery();
@@ -14,7 +14,6 @@ const DepositHistory = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDeposit, setSelectedDeposit] = useState(null);
   const [status, setStatus] = useState("");
-  const { addToast } = useToasts();
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,17 +46,11 @@ const DepositHistory = () => {
         .unwrap()
         .then((res) => {
           if (res.modifiedCount > 0) {
-            addToast("Status updated!", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Status updated!");
           }
         })
         .catch(() => {
-          addToast("Error updating status", {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error("Error updating status");
         });
     }
   };
@@ -74,17 +67,11 @@ const DepositHistory = () => {
       const res = await updateStatus(statusInfo).unwrap();
       console.log(res);
       if (res.modifiedCount > 0) {
-        addToast("Status updated!", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Status updated!");
         setModalOpen(false);
       }
     } catch (error) {
-      addToast("Error updating status", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "Error updating status");
     }
   };
 

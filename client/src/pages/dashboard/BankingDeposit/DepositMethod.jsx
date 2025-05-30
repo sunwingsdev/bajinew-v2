@@ -5,7 +5,6 @@ import {
   AiOutlineEdit,
   AiOutlineRollback,
 } from "react-icons/ai";
-import { useToasts } from "react-toast-notifications";
 import { IoReloadOutline } from "react-icons/io5";
 import {
   useDeletePaymentMethodMutation,
@@ -15,7 +14,8 @@ import {
 import { deleteImage } from "@/hooks/files";
 import AddDepositMethodForm from "@/components/dashboard/bankingDeposit/depositMethod/AddDepositMethodForm";
 import DeleteModal from "@/components/shared/Modals/DeleteModal";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
+import toast from "react-hot-toast";
 
 const DepositMethod = () => {
   const { data: gateways } = useGetPaymentMethodsQuery();
@@ -25,7 +25,6 @@ const DepositMethod = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [addNewMethod, setAddNewMethod] = useState(false);
-  const { addToast } = useToasts();
   const filteredGateways = gateways?.filter(
     (gateway) => gateway.paymentType === "deposit"
   );
@@ -40,24 +39,15 @@ const DepositMethod = () => {
     if (message) {
       const result = await deleteGateway(item?._id);
       if (result.error) {
-        addToast("Failed to delete the payment method.", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to delete the payment method.");
         return;
       }
       if (result.data.deletedCount > 0) {
-        addToast("Payment method deleted successfully.", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Payment method deleted successfully.");
         setIsOpen(false);
       }
     } else {
-      addToast("Image not deleted", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Image not deleted");
     }
   };
 
@@ -71,15 +61,9 @@ const DepositMethod = () => {
 
     const result = await updateStatus(statusInfo);
     if (result.error) {
-      addToast(result.error.data.error || "Something went wrong", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(result.error.data.error || "Something went wrong");
     } else if (result.data.modifiedCount > 0) {
-      addToast("Status updated successfully.", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Status updated successfully.");
     }
   };
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { BiLogInCircle } from "react-icons/bi";
 import { ClipLoader } from "react-spinners";
 import {

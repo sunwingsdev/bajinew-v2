@@ -5,11 +5,11 @@ import { useGetAllPaymentNumbersQuery } from "@/redux/features/allApis/paymentNu
 import { useGetPromotionsQuery } from "@/redux/features/allApis/promotionApi/promotionApi";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FcOk } from "react-icons/fc";
 import { FiCopy } from "react-icons/fi";
 import { RxCrossCircled } from "react-icons/rx";
 import { useSelector } from "react-redux";
-import { useToasts } from "react-toast-notifications";
 
 const DepositTab = () => {
   const { user } = useSelector((state) => state.auth);
@@ -32,8 +32,6 @@ const DepositTab = () => {
 
   // console.log(selectedPromotion);
   const [selectedNumber, setSelectedNumber] = useState(null);
-  // console.log(selectedNumber);
-  const { addToast } = useToasts();
 
   const { data: gateways } = useGetPaymentMethodsQuery();
   // console.log(gateways);
@@ -128,20 +126,13 @@ const DepositTab = () => {
     try {
       const result = await addDeposit(depositInfo);
       if (result.data.insertedId) {
-        addToast(
-          "Amount depositted successfully. Please Wait for the response",
-          {
-            appearance: "success",
-            autoDismiss: true,
-          }
+        toast.success(
+          "Amount depositted successfully. Please Wait for the response"
         );
         handleReset();
       }
     } catch (error) {
-      addToast("Failed to add a deposit", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to add a deposit");
     }
   };
 
@@ -158,10 +149,7 @@ const DepositTab = () => {
 
   const handleCopy = (text) => {
     navigator.clipboard.writeText(text);
-    addToast("নাম্বার কপি হয়েছে", {
-      appearance: "info",
-      autoDismiss: true,
-    });
+    toast.success("নাম্বার কপি হয়েছে");
   };
 
   return (

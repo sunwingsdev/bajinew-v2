@@ -12,14 +12,21 @@ import {
 } from "react-icons/io5";
 import { PiCashRegister } from "react-icons/pi";
 import { SlGameController } from "react-icons/sl";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 const DashboardLayout = () => {
   const [open, setOpen] = useState(true);
   // Menu items with dynamic submenu
   const menuItems = [
     { label: "Dashboard", icon: <IoMdHome />, to: "/dashboard" },
-    { label: "Users", icon: <FaUsers />, to: "/dashboard/users" },
+    {
+      label: "Users",
+      icon: <FaUsers />,
+      submenu: [
+        { label: "All Users", to: "/dashboard/users" },
+        { label: "Balance Histories", to: "/dashboard/balance-histories" },
+      ],
+    },
     {
       label: "Cash Agent",
       icon: <PiCashRegister />,

@@ -1,6 +1,6 @@
 import DynamicTable from "@/components/shared/tables/DynamicTable";
 // import { useGetUsersQuery } from "@/redux/features/allApis/usersApi/usersApi";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const Games = () => {
   const data = [

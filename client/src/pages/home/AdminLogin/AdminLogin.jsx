@@ -8,10 +8,10 @@ import {
   useLoginUserMutation,
 } from "@/redux/features/allApis/usersApi/usersApi";
 import { useDispatch } from "react-redux";
-import { useToasts } from "react-toast-notifications";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { logout, setCredentials } from "@/redux/slices/authSlice";
 import SpinLoader from "@/components/shared/loaders/Spinloader";
+import toast from "react-hot-toast";
 
 const AdminLogin = () => {
   const { data: homeControls } = useGetHomeControlsQuery();
@@ -19,7 +19,6 @@ const AdminLogin = () => {
   const [getUser] = useLazyGetAuthenticatedUserQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { addToast } = useToasts();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -42,25 +41,15 @@ const AdminLogin = () => {
         if (userData?.role !== "admin") {
           dispatch(logout());
           localStorage.removeItem("token");
-          addToast("Please submit admin username and password!!!", {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error("Please submit admin username and password!!!");
         } else {
           dispatch(setCredentials({ token: loginData.token, user: userData }));
-          addToast("Login successful", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Login successful");
           navigate("/dashboard");
         }
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      addToast("Provide valid username and password", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "Provide valid username and password");
     }
   };
 

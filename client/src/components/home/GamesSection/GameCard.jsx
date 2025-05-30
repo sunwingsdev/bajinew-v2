@@ -1,7 +1,7 @@
 import PrimaryButton from "@/components/shared/Buttons/PrimaryButton";
 import Modal from "@/components/shared/Modal";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const GameCard = ({ game }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const HeadingContent = ({ heading, contents, contentWidth, wrap }) => {
   return (

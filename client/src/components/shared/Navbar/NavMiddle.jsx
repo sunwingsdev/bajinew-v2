@@ -3,17 +3,17 @@ import Modal from "../Modal";
 import PrimaryButton from "../Buttons/PrimaryButton";
 import Container from "../Container";
 import { RiMenu2Line } from "react-icons/ri";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { MdOutlineExitToApp, MdOutlineHelpCenter } from "react-icons/md";
 import LoginForm from "../auth/LoginForm";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, setSingleUser } from "@/redux/slices/authSlice";
-import { useToasts } from "react-toast-notifications";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 import { useLazyGetUserByIdQuery } from "@/redux/features/allApis/usersApi/usersApi";
 import { IoReload } from "react-icons/io5";
 import SpinLoader from "../loaders/Spinloader";
+import toast from "react-hot-toast";
 
 const sponsors = [
   {
@@ -43,7 +43,6 @@ const NavMiddle = ({ navItems }) => {
   const [getSingleUser] = useLazyGetUserByIdQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { addToast } = useToasts();
   const logoHomeControl = homeControls?.find(
     (control) => control.category === "logo" && control.isSelected === true
   );
@@ -91,10 +90,7 @@ const NavMiddle = ({ navItems }) => {
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("token");
-    addToast("Logout successful", {
-      appearance: "success",
-      autoDismiss: true,
-    });
+    toast.success("Logout successful");
     navigate("/");
   };
 

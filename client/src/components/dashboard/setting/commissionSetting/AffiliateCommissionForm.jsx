@@ -1,15 +1,14 @@
 import { useForm } from "react-hook-form";
-import { useToasts } from "react-toast-notifications";
 import { useSelector } from "react-redux";
 import {
   // useAddCommissionMutation,
   useGetAllCommissionsQuery,
   useUpdateCommissionMutation,
 } from "@/redux/features/allApis/commissionApi/commissionApi";
+import toast from "react-hot-toast";
 
 const AffiliateCommissionForm = () => {
   const { user } = useSelector((state) => state.auth);
-  const { addToast } = useToasts();
   const { data: allCommissions } = useGetAllCommissionsQuery();
   //   const [addCommission, { isLoading }] = useAddCommissionMutation();
   const [updateCommission, { isLoading }] = useUpdateCommissionMutation();
@@ -30,11 +29,9 @@ const AffiliateCommissionForm = () => {
         id: firstCommission?._id,
         updatedData: { ...data, category },
       }).unwrap();
-      addToast("Commission updated successfully!", { appearance: "success" });
+      toast.success("Commission updated successfully!");
     } catch (error) {
-      addToast(error?.data?.message || "Failed to update commission", {
-        appearance: "error",
-      });
+      toast.error(error?.data?.message || "Failed to update commission");
     }
   };
 

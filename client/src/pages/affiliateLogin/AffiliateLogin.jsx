@@ -1,14 +1,14 @@
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Swal from "sweetalert2";
-import { useToasts } from "react-toast-notifications";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { ClipLoader } from "react-spinners";
 import affiliateBg from "../../assets/affiliates/affiliateBg.jpg";
 import { useLoginAffiliateMutation } from "@/redux/features/allApis/usersApi/affiliatesApi";
 import { useLazyGetAuthenticatedUserQuery } from "@/redux/features/allApis/usersApi/usersApi";
 import { setCredentials } from "@/redux/slices/authSlice";
+import toast from "react-hot-toast";
 
 const AffiliateLogin = () => {
   const {
@@ -17,7 +17,6 @@ const AffiliateLogin = () => {
     formState: { errors },
     reset,
   } = useForm();
-  const { addToast } = useToasts();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loginAffiliate, { isLoading }] = useLoginAffiliateMutation();
@@ -50,10 +49,7 @@ const AffiliateLogin = () => {
             },
           });
         } else {
-          addToast(errorMessage, {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error(errorMessage);
         }
 
         return; // Exit the function if there's an error
@@ -62,10 +58,7 @@ const AffiliateLogin = () => {
       if (loginData.token) {
         const { data: userData } = await getUser(loginData.token);
         dispatch(setCredentials({ token: loginData.token, user: userData }));
-        addToast("Login successful", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Login successful");
 
         if (userData?.user?.role !== "affiliate") {
           navigate("/affiliatesdashboard");
@@ -74,10 +67,7 @@ const AffiliateLogin = () => {
         }
       }
     } catch (error) {
-      addToast("Unexpected error occurred.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Unexpected error occurred.");
     } finally {
       reset();
     }

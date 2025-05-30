@@ -1,6 +1,6 @@
 import Footer2 from "@/components/shared/Footer/Footer2";
 import Header from "@/components/shared/header/Header";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 import menu1 from "../assets/v2/icon-home.png";
 import menu2 from "../assets/v2/icon-exclusive.png";

@@ -4,10 +4,10 @@ import { useLazyGetUserByIdQuery } from "@/redux/features/allApis/usersApi/users
 import { useAddWithdrawMutation } from "@/redux/features/allApis/withdrawsApi/withdrawsApi";
 import { setSingleUser } from "@/redux/slices/authSlice";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { FcOk } from "react-icons/fc";
 import { RxCrossCircled } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux";
-import { useToasts } from "react-toast-notifications";
 
 const WithdrawTab = () => {
   const [addWithdraw] = useAddWithdrawMutation();
@@ -16,7 +16,6 @@ const WithdrawTab = () => {
   const { user, singleUser } = useSelector((state) => state.auth);
   const [getSingleUser] = useLazyGetUserByIdQuery();
   const dispatch = useDispatch();
-  const { addToast } = useToasts();
 
   const [formData, setFormData] = useState({
     paymentMethod: null,
@@ -79,28 +78,19 @@ const WithdrawTab = () => {
     };
 
     if (singleUser?.balance <= totalAmount) {
-      addToast("Amount can not be exceed from your balance", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Amount can not be exceed from your balance");
       return;
     }
 
     try {
       const result = await addWithdraw(withdrawData);
       if (result.data.insertedId) {
-        addToast("Amount submitted for withdraw. Wait for the response", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Amount submitted for withdraw. Wait for the response");
         handleReset();
         reloadBalance();
       }
     } catch (error) {
-      addToast("Failed to add a deposit", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to add a deposit");
     }
   };
 

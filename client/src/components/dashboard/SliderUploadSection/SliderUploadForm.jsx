@@ -3,8 +3,8 @@ import { Button } from "@/components/ui/button";
 import { IoAdd } from "react-icons/io5";
 import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
 import { useAddHomeControlMutation } from "@/redux/features/allApis/homeControlApi/homeControlApi";
-import { useToasts } from "react-toast-notifications";
 import SpinLoader from "@/components/shared/loaders/Spinloader";
+import toast from "react-hot-toast";
 
 const SliderUploadForm = ({ closeModal }) => {
   const [uploadImage] = useUploadImageMutation();
@@ -12,7 +12,6 @@ const SliderUploadForm = ({ closeModal }) => {
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-  const { addToast } = useToasts();
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -44,30 +43,20 @@ const SliderUploadForm = ({ closeModal }) => {
           };
           const result = await addHomeControl(logoInfo);
           if (result.data.insertedId) {
-            addToast("Slider uploaded successfully", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Slider uploaded successfully");
             setImagePreview(null);
             setImageFile(null);
             setLoading(false);
             closeModal();
           }
         }
-        // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setLoading(false);
-        addToast("Failed to upload logo", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to upload logo");
       }
     } else {
       setLoading(false);
-      addToast("Failed to upload image", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to upload image");
     }
   };
 

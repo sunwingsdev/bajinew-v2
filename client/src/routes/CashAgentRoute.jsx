@@ -1,22 +1,18 @@
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { useNavigate } from "react-router";
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 const CashAgentRoute = ({ children }) => {
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const { addToast } = useToasts();
 
   useEffect(() => {
     if (!token || !user || user?.role !== "agent") {
-      addToast("Please login as an agent first", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please login as an agent first");
       navigate("/becomeanagent");
     }
-  }, [token, user, addToast, navigate]);
+  }, [token, user, navigate]);
 
   if (!token || !user || user?.role !== "agent") {
     return null;

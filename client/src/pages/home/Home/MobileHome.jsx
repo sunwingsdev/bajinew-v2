@@ -1,4 +1,4 @@
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router";
 import HomeFavorite from "./HomeFavorite";
 import HomeFeatures from "./HomeFeatures";
 import HomeTabs from "./HomeTabs";

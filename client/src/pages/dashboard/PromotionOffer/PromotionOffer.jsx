@@ -8,14 +8,13 @@ import {
   useGetPromotionsQuery,
 } from "@/redux/features/allApis/promotionApi/promotionApi";
 import { useState } from "react";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 
 const PromotionOffer = () => {
   const { data: promotions, isLoading, refetch } = useGetPromotionsQuery();
   const [deletePromotion] = useDeletePromotionMutation();
   const [item, setItem] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const { addToast } = useToasts();
 
   const handleDeleteButtonClick = (item) => {
     setIsOpen(true);
@@ -28,19 +27,13 @@ const PromotionOffer = () => {
       if (message) {
         const result = await deletePromotion(item?._id);
         if (result.data) {
-          addToast("Promotion deleted successfully", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Promotion deleted successfully");
         }
         refetch();
         setIsOpen(false);
       }
     } catch (error) {
-      addToast("Failed to delete promotion", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.error(error || "Failed to delete promotion");
     }
   };
 

@@ -1,13 +1,13 @@
 import { ClipLoader } from "react-spinners";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { IoIosSearch } from "react-icons/io";
-import { useToasts } from "react-toast-notifications";
 import { useState } from "react";
 import {
   useGetAllPaymentNumbersQuery,
   useUpdatePaymentNumberStatusMutation,
 } from "@/redux/features/allApis/paymentNumberApi/paymentNumberApi";
 import TablePagination from "@/components/dashboard/TablePagination";
+import toast from "react-hot-toast";
 
 const PaymentMethodRequests = () => {
   const {
@@ -21,7 +21,6 @@ const PaymentMethodRequests = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
   const [searchQuery, setSearchQuery] = useState("");
-  const { addToast } = useToasts();
 
   const filteredNumbers = allPaymentNumbers
     ?.filter((payNum) => payNum?.channel !== "apay")
@@ -55,22 +54,12 @@ const PaymentMethodRequests = () => {
       });
 
       if (response?.data?.message) {
-        addToast(response.data.message, {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success(response.data.message);
       } else {
-        addToast("Failed to update status", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to update status");
       }
     } catch (error) {
-      console.log(error);
-      addToast("An error occurred while updating the status.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "An error occurred while updating the status.");
     }
   };
 

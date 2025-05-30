@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { useLocation } from "react-router";
 import AddGames from "../AddGames/AddGames";
+import toast from "react-hot-toast";
 
 const submenus = [
   { label: "Sprots Live TV", to: "/dashboard/gamesApi/sports-live-tv" },
@@ -32,7 +32,6 @@ const GamesApi = () => {
     secretPin: "",
     gameFile: null,
   });
-  const { addToast } = useToasts();
 
   useEffect(() => {
     const selected = submenus.find((menu) => menu.to === location.pathname);
@@ -58,10 +57,7 @@ const GamesApi = () => {
       dataToLog.gameFile = formData.gameFile.name;
     }
 
-    addToast("Invalid api key", {
-      appearance: "error",
-      autoDismiss: true,
-    });
+    toast.error("Invalid api key");
   };
 
   return (

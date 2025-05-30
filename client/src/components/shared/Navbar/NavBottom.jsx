@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import Container from "../Container";
 import { IoHomeSharp } from "react-icons/io5";
 import { FaMobileAlt } from "react-icons/fa";

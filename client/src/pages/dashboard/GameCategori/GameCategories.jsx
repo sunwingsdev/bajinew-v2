@@ -7,10 +7,10 @@ import {
 import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
 import { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { useToasts } from "react-toast-notifications";
 import SubCategories from "./SubCategories";
 import { AiOutlineDelete } from "react-icons/ai";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const GameCategories = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +22,6 @@ const GameCategories = () => {
   const [deleteCategory] = useDeleteCategoryMutation();
   const [uploadImage] = useUploadImageMutation();
   const [addCategory] = useAddCategoryMutation();
-  const { addToast } = useToasts();
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -52,10 +51,7 @@ const GameCategories = () => {
           };
           const result = await addCategory(categoryInfo);
           if (result.data.insertedId) {
-            addToast("Category created successfully", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Category created successfully");
             setImagePreview(null);
             setIconFile(null);
             setCategoryName("");
@@ -65,16 +61,10 @@ const GameCategories = () => {
         }
       } catch (error) {
         setLoading(false);
-        addToast("Failed to create category", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error(error || "Failed to create category");
       }
     } else {
-      addToast("Failed to create category", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to create category");
     }
   };
 

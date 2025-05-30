@@ -1,7 +1,7 @@
 import LoginForm from "@/components/shared/auth/LoginForm";
 import Modal from "@/components/shared/Modal";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import homeImg from "../../../assets/mobile-colar/toolbar-icon-home.svg";
 import promoImg from "../../../assets/mobile-colar/toolbar-icon-promotion.svg";
 import depoImg from "../../../assets/mobile-colar/toolbar-icon-deposit.svg";
