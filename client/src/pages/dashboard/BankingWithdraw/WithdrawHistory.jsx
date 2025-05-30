@@ -1,12 +1,12 @@
 import { IoIosSearch } from "react-icons/io";
 
 import { useState } from "react";
-import { useToasts } from "react-toast-notifications";
 import {
   useGetWithdrawsQuery,
   useUpdateWithdrawStatusMutation,
 } from "@/redux/features/allApis/withdrawsApi/withdrawsApi";
 import ReasonModal from "@/components/shared/Modals/ReasonModal";
+import toast from "react-hot-toast";
 
 const WithdrawHistory = () => {
   const { data: allWithdraws, isLoading, isError } = useGetWithdrawsQuery();
@@ -36,8 +36,6 @@ const WithdrawHistory = () => {
     }
   };
 
-  const { addToast } = useToasts();
-
   const handleStatusClick = (withdraw, selectedStatus) => {
     if (selectedStatus === "rejected") {
       setSelectedWithdraw(withdraw);
@@ -55,17 +53,11 @@ const WithdrawHistory = () => {
         .unwrap()
         .then((res) => {
           if (res.modifiedCount > 0) {
-            addToast("Status updated!", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Status updated!");
           }
         })
         .catch(() => {
-          addToast("Error updating status", {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error("Error updating status");
         });
     }
   };
@@ -81,17 +73,11 @@ const WithdrawHistory = () => {
     try {
       const { data } = await updateWithdrawStatus(statusInfo);
       if (data.modifiedCount > 0) {
-        addToast("Status upadated!", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Status updated!");
         setModalOpen(false);
       }
     } catch (error) {
-      addToast("Error updating status", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Error updating status");
     }
   };
 

@@ -1,17 +1,12 @@
+import toast from "react-hot-toast";
 import { IoCopyOutline } from "react-icons/io5";
-import { useToasts } from "react-toast-notifications";
 
 const EmailCell = ({ email }) => {
-  const { addToast } = useToasts();
-
   const handleCopyEmail = () => {
     if (email) {
       navigator.clipboard.writeText(email);
 
-      addToast("Email copied to clipboard!", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Email copied to clipboard!");
     }
   };
   return (

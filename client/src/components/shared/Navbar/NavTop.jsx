@@ -3,7 +3,7 @@ import { IoLogoWhatsapp } from "react-icons/io";
 import { AiFillFacebook } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 import { RiMessage2Fill } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const NavTop = () => {
   const socialItems = [

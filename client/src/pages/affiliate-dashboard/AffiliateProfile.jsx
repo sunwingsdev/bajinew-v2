@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { useParams } from "react-router";
 import { ClipLoader } from "react-spinners";
 import noImage from "../../assets/noImageAvailable.png";
 import { IoCameraOutline } from "react-icons/io5";
@@ -13,13 +12,13 @@ import { useUpdateUserProfileImageMutation } from "@/redux/features/allApis/user
 import { uploadImage } from "@/hooks/files";
 import CashAgentProfileUserInfo from "@/components/cash-agent/cash-agent-profile/CashAgentProfileUserInfo";
 import CashAgentKycUpdate from "@/components/cash-agent/cash-agent-profile/CashAgentKycUpdate";
+import toast from "react-hot-toast";
 
 const AffiliateProfile = () => {
   const { id } = useParams();
   const [selectedSection, setSelectedSection] = useState("userInfo");
   const [selectedImage, setSelectedImage] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
-  const { addToast } = useToasts();
   const { handleSubmit, reset } = useForm();
   const { data: singleAffiliate, isLoading: affiliateLoading } =
     useGetAffiliateByIdQuery(id);
@@ -49,10 +48,7 @@ const AffiliateProfile = () => {
 
   const onSubmit = async () => {
     if (!profileImage) {
-      addToast("Please upload a profile image", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please upload a profile image");
       return;
     }
     try {
@@ -66,20 +62,13 @@ const AffiliateProfile = () => {
       const response = await updateProfileImage(formattedData).unwrap();
 
       if (response) {
-        addToast("Profile image updated successfully", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Profile image updated successfully");
         reset();
         setProfileImage(null); // Clear state after successful upload
         setSelectedImage(null);
       }
     } catch (error) {
-      console.error("Error uploading profile image:", error);
-      addToast("Failed to upload profile image", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "Failed to upload profile image");
     }
   };
   return (

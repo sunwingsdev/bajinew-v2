@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router";
 import { FaRegCopy } from "react-icons/fa";
 import { GiCheckMark } from "react-icons/gi";
-import { useToasts } from "react-toast-notifications";
 import {
   useAddReferCodeMutation,
   useGetAllReferCodesQuery,
 } from "@/redux/features/allApis/referCodesApi/referCodesApi";
+import toast from "react-hot-toast";
 
 const MyAffiliateLinks = () => {
   const { id } = useParams();
@@ -14,7 +14,6 @@ const MyAffiliateLinks = () => {
   const [generatedLinks, setGeneratedLinks] = useState([]);
   const [copied, setCopied] = useState(null);
   const navigate = useNavigate();
-  const { addToast } = useToasts();
 
   const { data: allReferLinks } = useGetAllReferCodesQuery();
   const [addReferCode, { isLoading }] = useAddReferCodeMutation();
@@ -47,17 +46,11 @@ const MyAffiliateLinks = () => {
       ]);
 
       // Show success toast
-      addToast("Referral Code Generated Successfully!", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Referral Code Generated Successfully!");
     } catch (err) {
       console.error("Error generating referral code:", err);
       // Show error toast
-      addToast("Failed to generate referral code", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to generate referral code");
     }
   };
 
@@ -72,10 +65,7 @@ const MyAffiliateLinks = () => {
     setCopied(text);
 
     // Show success toast for copying
-    addToast("Link copied to clipboard!", {
-      appearance: "success",
-      autoDismiss: true,
-    });
+    toast.success("Link copied to clipboard!");
 
     setTimeout(() => setCopied(null), 2000);
   };

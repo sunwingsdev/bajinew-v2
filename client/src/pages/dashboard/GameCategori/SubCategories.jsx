@@ -7,11 +7,11 @@ import {
 } from "@/redux/features/allApis/categoryApi/subCategoryApi";
 import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import { useToasts } from "react-toast-notifications";
 import Swal from "sweetalert2";
 
 const SubCategories = () => {
@@ -28,7 +28,6 @@ const SubCategories = () => {
   const [uploadImage] = useUploadImageMutation();
   const [addSubCategory] = useAddSubCategoryMutation();
   const [deleteSubCategory] = useDeleteSubCategoryMutation();
-  const { addToast } = useToasts();
 
   const filteredCategories = allCategories?.filter(
     (category) => category.name !== "এক্সক্লুসিভ"
@@ -67,10 +66,7 @@ const SubCategories = () => {
           };
           const result = await addSubCategory(categoryInfo);
           if (result.data.insertedId) {
-            addToast("Sub Category created successfully", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Sub Category created successfully");
             setImagePreview(null);
             setIconFile(null);
             setSubCategoryName("");
@@ -81,16 +77,10 @@ const SubCategories = () => {
         }
       } catch (error) {
         setLoading(false);
-        addToast("Failed to create sub category", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error(error || "Failed to create sub category");
       }
     } else {
-      addToast("Failed to create sub category", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to create sub category");
     }
   };
 
@@ -109,19 +99,12 @@ const SubCategories = () => {
           const res = await deleteSubCategory(id);
 
           if (res?.data?.deletedSubCategory?.deletedCount > 0) {
-            addToast(
-              "Sub Category and its games has been deleted successfully",
-              {
-                appearance: "success",
-                autoDismiss: true,
-              }
+            toast.success(
+              "Sub Category and its games has been deleted successfully"
             );
           }
         } catch (err) {
-          addToast("Failed to delete sub category", {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error(err || "Failed to delete sub category");
         }
       }
     });

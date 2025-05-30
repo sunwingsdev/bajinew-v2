@@ -4,8 +4,8 @@ import {
   useGetWithdrawsQuery,
   useUpdateWithdrawStatusMutation,
 } from "@/redux/features/allApis/withdrawsApi/withdrawsApi";
-import { useToasts } from "react-toast-notifications";
 import ViewModal from "@/components/shared/sharedModal/ViewModal";
+import toast from "react-hot-toast";
 
 const WithdrawsHistory = () => {
   const [updateStatus] = useUpdateWithdrawStatusMutation();
@@ -17,7 +17,6 @@ const WithdrawsHistory = () => {
   const [filteredData, setFilteredData] = useState([]); // Data after filtering and searching
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
-  const { addToast } = useToasts();
 
   const handleViewClick = (row) => {
     setModalData(row);
@@ -117,17 +116,10 @@ const WithdrawsHistory = () => {
     try {
       const result = await updateStatus(id);
       if (result.data.modifiedCount > 0) {
-        addToast("Updated status successfully", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Updated status successfully");
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      addToast("Failed to update status", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to update status");
     }
   };
 

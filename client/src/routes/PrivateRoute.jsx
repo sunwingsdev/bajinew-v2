@@ -1,15 +1,11 @@
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { Navigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { Navigate } from "react-router";
 
 const PrivateRoute = ({ children }) => {
-  const { addToast } = useToasts();
   const { token, user } = useSelector((state) => state.auth);
   if (!token || !user) {
-    addToast("Please login first", {
-      appearance: "error",
-      autoDismiss: true,
-    });
+    toast.error("Please login first");
     return <Navigate to="/" />;
   } else return children;
 };

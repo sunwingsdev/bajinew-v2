@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import FooterSponsorship from "./FooterSponsorship";
 import FooterAmbassador from "./FooterAmbassador";
 import FooterDeposit from "./FooterDeposit";

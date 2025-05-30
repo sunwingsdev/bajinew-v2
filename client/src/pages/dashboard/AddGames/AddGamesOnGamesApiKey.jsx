@@ -9,11 +9,11 @@ import {
 import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
 import { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { useToasts } from "react-toast-notifications";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { useGetAllSubCategoriesQuery } from "@/redux/features/allApis/categoryApi/subCategoryApi";
 import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const AddGamesOnGamesApiKey = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -36,7 +36,6 @@ const AddGamesOnGamesApiKey = () => {
 
   const [uploadImage] = useUploadImageMutation();
   const [addGame] = useAddGameMutation();
-  const { addToast } = useToasts();
 
   const handleEdit = (game) => {
     setGameId(game._id);
@@ -90,26 +89,20 @@ const AddGamesOnGamesApiKey = () => {
         // Updating existing game
         const result = await updateHomeGame({ id: gameId, data: gameInfo });
         if (result.data.modifiedCount > 0) {
-          addToast("Game updated successfully", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Game updated successfully");
         }
       } else {
         // Creating a new game
         const result = await addGame(gameInfo);
         if (result.data.insertedId) {
-          addToast("Game created successfully", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Game created successfully");
         }
       }
 
       setIsModalOpen(false);
       resetForm();
     } catch (error) {
-      addToast("Operation failed", { appearance: "error", autoDismiss: true });
+      toast.error(error || "Operation failed");
     } finally {
       setLoading(false);
     }
@@ -141,21 +134,12 @@ const AddGamesOnGamesApiKey = () => {
       try {
         const response = await deleteHomeGame(gameId);
         if (response.data.deletedCount > 0) {
-          addToast("Game deleted successfully", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Game deleted successfully");
         } else {
-          addToast("Failed to delete the game", {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error("Failed to delete the game");
         }
       } catch (error) {
-        addToast("Error deleting game", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Error deleting game");
       }
     }
   };

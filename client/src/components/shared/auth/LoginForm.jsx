@@ -11,7 +11,7 @@ import {
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/redux/slices/authSlice";
 import SpinLoader from "../loaders/Spinloader";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 
 const LoginForm = ({ closeModal }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,7 +20,6 @@ const LoginForm = ({ closeModal }) => {
   const dispatch = useDispatch();
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const [getUser] = useLazyGetAuthenticatedUserQuery();
-  const { addToast } = useToasts();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -40,14 +39,11 @@ const LoginForm = ({ closeModal }) => {
       if (loginData.token) {
         const { data: userData } = await getUser(loginData.token);
         dispatch(setCredentials({ token: loginData.token, user: userData }));
-        addToast("Login successful", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Login successful");
         closeModal();
       }
     } catch (err) {
-      console.error("Login failed:", err);
+      toast.error(err?.data?.error || "Login failed. Please try again.");
     }
   };
 

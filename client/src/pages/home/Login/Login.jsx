@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FaChevronLeft, FaTimes, FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,7 @@ import {
 } from "@/redux/features/allApis/usersApi/usersApi";
 import { setCredentials } from "@/redux/slices/authSlice";
 import SpinLoader from "@/components/shared/loaders/Spinloader";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +21,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const [getUser] = useLazyGetAuthenticatedUserQuery();
-  const { addToast } = useToasts();
 
   const handleGoBack = () => {
     navigate(-1);
@@ -41,10 +40,7 @@ const Login = () => {
       if (loginData.token) {
         const { data: userData } = await getUser(loginData.token);
         dispatch(setCredentials({ token: loginData.token, user: userData }));
-        addToast("Login successful", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Login successful");
 
         if (userData?.role !== "admin") {
           navigate("/profile");
@@ -52,12 +48,8 @@ const Login = () => {
           navigate("/dashboard");
         }
       }
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      addToast("Provide valid username and password", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "Provide valid username and password");
     }
   };
 

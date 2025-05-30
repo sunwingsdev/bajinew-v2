@@ -1,6 +1,6 @@
 import { IoIosLogOut, IoLogoGameControllerB, IoMdHome } from "react-icons/io";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import { FaAffiliatetheme, FaUsers, FaWallet } from "react-icons/fa";
 import { SiInstructure, SiPacker } from "react-icons/si";
 import { TbHistoryToggle } from "react-icons/tb";

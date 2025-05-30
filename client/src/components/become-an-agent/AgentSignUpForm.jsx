@@ -4,7 +4,7 @@ import { FaSync } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { useAddAgentMutation } from "@/redux/features/allApis/usersApi/agentsApi";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 
 const AgentSignupForm = ({ onClose }) => {
   const [addAgent, { isLoading }] = useAddAgentMutation();
@@ -19,7 +19,6 @@ const AgentSignupForm = ({ onClose }) => {
   const [isCodeMatched, setIsCodeMatched] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [phone, setPhone] = useState("");
-  const { addToast } = useToasts();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -51,10 +50,7 @@ const AgentSignupForm = ({ onClose }) => {
       try {
         const result = await addAgent(userInfo);
         if (result.error) {
-          addToast(result.error.data.error, {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error(result.error.data.error);
         } else if (result.data.insertedId) {
           Swal.fire({
             text: "Thanks for your registration. Please wait for admin approval.",

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DepositTab from "@/components/home/DepositTab/DepositTab";
 import WithdrawTab from "@/components/home/WithdrawTab/WithdrawTab";
 import WalletSection from "@/components/home/WalletSection/WalletSection";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 
 const Deposit = () => {
   const [activeTab, setActiveTab] = useState("deposit");

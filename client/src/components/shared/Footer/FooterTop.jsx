@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PrimaryButton from "../Buttons/PrimaryButton";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { FaWhatsapp } from "react-icons/fa";
 
 const FooterTop = () => {

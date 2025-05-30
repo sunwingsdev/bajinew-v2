@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { RiLiveLine } from "react-icons/ri";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const ExchangePageMenu = ({ menuItems }) => {
   const [selected, setSelected] = useState(""); // স্টেট দিয়ে ট্র্যাকিং

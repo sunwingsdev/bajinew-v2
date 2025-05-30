@@ -1,5 +1,5 @@
 import SecondaryBanner from "@/components/shared/SecondaryBanner";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import bannerImage from "@/assets/secondary-banners/slot.jpg";
 import GamesSection from "@/components/home/GamesSection/GamesSection";
 const CategoryPage = () => {
