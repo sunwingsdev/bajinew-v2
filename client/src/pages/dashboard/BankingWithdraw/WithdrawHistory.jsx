@@ -174,7 +174,20 @@ const WithdrawHistory = () => {
                   {withdraw.amount} ৳
                 </td>
                 <td className="p-3 border-r border-r-blue-300">
-                  {withdraw.withdrawNumber}
+                  <div className="space-y-1">
+                    {withdraw.userInputs
+                      ? Object.entries(withdraw.userInputs).map(
+                          ([key, value]) => (
+                            <p key={key}>
+                              <span className="font-medium capitalize">
+                                {key.replace(/([A-Z])/g, " $1")}:
+                              </span>{" "}
+                              {value || "N/A"}
+                            </p>
+                          )
+                        )
+                      : "No data"}
+                  </div>
                 </td>
                 {/* <td className="p-3">
                   <div>

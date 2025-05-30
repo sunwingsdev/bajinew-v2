@@ -37,12 +37,12 @@ const corsConfig = {
     "http://www.jstlive.net",
     "www.jstlive.net",
     "jstlive.net",
-    "https://bajinew.oraclesoft.info",
-    "http://bajinew.oraclesoft.info",
-    "https://www.bajinew.oraclesoft.info",
-    "http://www.bajinew.oraclesoft.info",
-    "www.bajinew.oraclesoft.info",
-    "bajinew.oraclesoft.info",
+    "https://lclb.net",
+    "https://www.lclb.net",
+    "http://lclb.net",
+    "http://www.lclb.net",
+    "www.lclb.net",
+    "lclb.net",
     "https://bajinew.egamings.live",
     "http://bajinew.egamings.live",
     "https://www.bajinew.egamings.live",
@@ -62,10 +62,26 @@ const corsConfig = {
     "https://www.joy9.live",
     "http://www.joy9.live",
     "www.joy9.live",
+    // "https://comokbaji.com",
+    // "http://comokbaji.com",
+    // "www.comokbaji.com",
+    // "comokbaji.com",
+    // "https://moneyeran365.com",
+    // "http://moneyeran365.com",
+    // "www.moneyeran365.com",
+    // "moneyeran365.com",
+    // "https://1xkhela.com",
+    // "http://1xkhela.com",
+    // "www.1xkhela.com",
+    // "1xkhela.com",
     "https://trickbaz.com",
     "http://trickbaz.com",
     "www.trickbaz.com",
     "trickbaz.com",
+    // "https://baji.oracletechnology.net",
+    // "http://baji.oracletechnology.net",
+    // "www.baji.oracletechnology.net",
+    // "baji.oracletechnology.net",
     "*",
   ],
   credentials: true,
@@ -78,7 +94,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // middlewares
 app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
+app.options("", cors(corsConfig));
 app.use(express.json());
 
 // MongoDB URI and client setup
@@ -123,7 +139,7 @@ async function run() {
   try {
     await client.connect();
 
-    // Database
+    //Database
     const database = client.db("bajinewv2");
 
     // Collections
