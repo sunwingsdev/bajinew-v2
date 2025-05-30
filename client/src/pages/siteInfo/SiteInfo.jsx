@@ -285,7 +285,7 @@ const SiteInfo = () => {
             {tabsData?.map((tab, index) => (
               <TabPanel key={index}>
                 {tab.contentData ? (
-                  <SiteInfoTabPanelContent data={tab.contentData} />
+                  <SiteInfoTabPanelContent data={tab.contentData} /> 
                 ) : (
                   tab.content || <div>No content available</div>
                 )}

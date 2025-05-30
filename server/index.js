@@ -26,7 +26,7 @@ const withdrawMethodApi = require("./apis/paymentMethodApi/withdrawMethodApi");
 const referCodeApi = require("./apis/referCodeApi/referCodeApi");
 const commissionApi = require("./apis/commissionApi/commissionApi");
 
-const port = process.env.PORT || 5001;
+const port = process.env.PORT || 5000;
 
 // CORS configuration
 const corsConfig = {
