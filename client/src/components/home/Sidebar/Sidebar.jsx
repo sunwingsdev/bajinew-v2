@@ -1,5 +1,5 @@
 import { FaStar } from "react-icons/fa";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import Modal from "@/components/shared/Modal";

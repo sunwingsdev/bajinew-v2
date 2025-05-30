@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import HeadingContent from "../HeadingContent";
 import HeadingImageContent from "../HeadingImageContent";
 import { useGetPagesDetailQuery } from "@/redux/features/allApis/pagesApi/pagesApi";

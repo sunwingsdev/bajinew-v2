@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { FaAngleDown, FaRegCircle } from "react-icons/fa";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 import OppsModal from "../shared/Modals/OppsModal";

@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import noImage from "../../../assets/noImageAvailable.png";
-import { useToasts } from "react-toast-notifications";
 import { ClipLoader } from "react-spinners";
 import { FaCheck } from "react-icons/fa6";
 import { IoMdClose } from "react-icons/io";
@@ -21,13 +20,13 @@ import {
 import { useGetAllPaymentNumbersQuery } from "@/redux/features/allApis/paymentNumberApi/paymentNumberApi";
 import { uploadImage } from "@/hooks/files";
 import CashAgentProfileUserInfo from "@/components/cash-agent/cash-agent-profile/CashAgentProfileUserInfo";
+import toast from "react-hot-toast";
 
 const AgentProfile = () => {
   const { id } = useParams();
   const [selectedSection, setSelectedSection] = useState("userInfo");
   const [selectedImage, setSelectedImage] = useState(null);
   const [profileImage, setProfileImage] = useState(null);
-  const { addToast } = useToasts();
   const { handleSubmit, reset } = useForm();
   const { data: singleAgent, isLoading: agentLoading } =
     useGetAgentByIdQuery(id);
@@ -62,31 +61,18 @@ const AgentProfile = () => {
       const response = await updateKycStatus({ id: kycId, status: newStatus });
 
       if (response?.data?.message) {
-        addToast(response.data.message, {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success(response.data.message);
       } else {
-        addToast("Failed to update status", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to update status");
       }
     } catch (error) {
-      console.log(error);
-      addToast("An error occurred while updating the status.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "An error occurred while updating the status.");
     }
   };
 
   const onSubmit = async () => {
     if (!profileImage) {
-      addToast("Please upload a profile image", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please upload a profile image");
       return;
     }
     try {
@@ -100,20 +86,13 @@ const AgentProfile = () => {
       const response = await updateProfileImage(formattedData).unwrap();
 
       if (response) {
-        addToast("Profile image updated successfully", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Profile image updated successfully");
         reset();
         setProfileImage(null); // Clear state after successful upload
         setSelectedImage(null);
       }
     } catch (error) {
-      console.error("Error uploading profile image:", error);
-      addToast("Failed to upload profile image", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "Failed to upload profile image");
     }
   };
 

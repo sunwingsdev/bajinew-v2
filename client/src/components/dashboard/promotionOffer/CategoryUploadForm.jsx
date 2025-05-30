@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useAddPromotionCategoryMutation } from "@/redux/features/allApis/promotionApi/promotionCategoryApi";
 import { useForm } from "react-hook-form";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 
 const CategoryUploadForm = ({ closeModal }) => {
   const {
@@ -11,7 +11,6 @@ const CategoryUploadForm = ({ closeModal }) => {
   } = useForm();
   const [addPromotionCategory, { isLoading }] =
     useAddPromotionCategoryMutation();
-  const { addToast } = useToasts();
 
   const onSubmit = async (data) => {
     const categoryInfo = {
@@ -21,17 +20,12 @@ const CategoryUploadForm = ({ closeModal }) => {
     try {
       const { data } = await addPromotionCategory(categoryInfo);
       if (data.insertedId) {
-        addToast("Category added successfully", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Category added successfully");
+
         closeModal();
       }
     } catch (error) {
-      addToast("Failed to add category", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to add category");
     }
   };
 

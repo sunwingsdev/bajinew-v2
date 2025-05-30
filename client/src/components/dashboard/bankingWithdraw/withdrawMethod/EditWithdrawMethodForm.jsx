@@ -7,14 +7,14 @@ import Swal from "sweetalert2";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import ReactQuill from "react-quill";
 import { useEffect, useState } from "react";
-import { useToasts } from "react-toast-notifications";
 import Select from "react-select";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 import {
   useGetWithdrawMethodByIdQuery,
   useUpdateWithdrawMethodMutation,
 } from "@/redux/features/allApis/paymentMethodApi/withdrawMethodApi";
 import { uploadImage } from "@/hooks/files";
+import toast from "react-hot-toast";
 
 const EditWithdrawMethodForm = () => {
   const { id } = useParams();
@@ -34,7 +34,6 @@ const EditWithdrawMethodForm = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [file, setFile] = useState(null);
   const [instruction, setInstruction] = useState("");
-  const { addToast } = useToasts();
   // Temporary state for the popup form
   const [newField, setNewField] = useState({
     type: "",
@@ -210,15 +209,9 @@ const EditWithdrawMethodForm = () => {
     console.log("Update result:", result);
 
     if (result.error) {
-      addToast(result.error.data?.error || "Update failed!", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(result.error.data?.error || "Update failed!");
     } else {
-      addToast("Payment method updated successfully.", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Payment method updated successfully.");
     }
   };
 

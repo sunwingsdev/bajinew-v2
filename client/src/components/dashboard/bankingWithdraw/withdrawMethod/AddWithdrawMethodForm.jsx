@@ -3,10 +3,10 @@ import Swal from "sweetalert2";
 import "react-quill/dist/quill.snow.css"; // Import Quill styles
 import ReactQuill from "react-quill";
 import { useState } from "react";
-import { useToasts } from "react-toast-notifications";
 import Select from "react-select";
 import { useAddWithdrawMethodMutation } from "@/redux/features/allApis/paymentMethodApi/withdrawMethodApi";
 import { uploadImage } from "@/hooks/files";
+import toast from "react-hot-toast";
 
 const AddWithdrawMethodForm = () => {
   const [addPaymentMethod, { isLoading }] = useAddWithdrawMethodMutation();
@@ -20,7 +20,6 @@ const AddWithdrawMethodForm = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [file, setFile] = useState(null);
   const [instruction, setInstruction] = useState("");
-  const { addToast } = useToasts();
   // Temporary state for the popup form
   const [newField, setNewField] = useState({
     type: "",
@@ -152,16 +151,10 @@ const AddWithdrawMethodForm = () => {
         };
         const result = await addPaymentMethod(payload);
         if (result.error) {
-          addToast(result.error.data.error, {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error(result.error.data.error);
         }
         if (result.data.insertedId) {
-          addToast("Payment method added successfully.", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Payment method added successfully.");
           setFormData({
             method: "",
             gateway: "apay",

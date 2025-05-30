@@ -1,5 +1,5 @@
 import Container from "@/components/shared/Container";
-import SiteInfoTabPanelContent from "@/components/siteInfo/SIteInfoTabPanelContent";
+import SiteInfoTabPanelContent from "@/components/siteInfo/SiteInfoTabPanelContent";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 

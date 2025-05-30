@@ -1,17 +1,13 @@
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { useNavigate } from "react-router";
 
 const AdminRoute = ({ children }) => {
   const { token, user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  const { addToast } = useToasts();
 
   if (!token || !user || user?.role !== "admin") {
-    addToast("Please first login as a admin", {
-      appearance: "error",
-      autoDismiss: true,
-    });
+    toast.error("Please first login as a admin");
     navigate("/admin");
   } else return children;
 };

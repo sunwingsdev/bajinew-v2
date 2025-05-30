@@ -1,6 +1,6 @@
 import Sidebar from "@/components/home/Sidebar/Sidebar";
 import Container from "@/components/shared/Container";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 const Profile = () => {
   return (

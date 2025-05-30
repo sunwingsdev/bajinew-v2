@@ -1,5 +1,5 @@
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const FooterBottom = () => {
   const { data: homeControls } = useGetHomeControlsQuery();

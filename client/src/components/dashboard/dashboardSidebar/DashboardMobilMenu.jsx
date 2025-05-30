@@ -1,13 +1,12 @@
 import { IoMdMenu, IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5"; // Close icon
-
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router";
+import { FaRegUserCircle, FaRegCircle } from "react-icons/fa";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/redux/slices/authSlice";
-import { useToasts } from "react-toast-notifications";
-import { FaRegUserCircle, FaRegCircle } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const DashboardMobilMenu = ({ open, menuItems, logOutPath, dashboardLink }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -15,7 +14,6 @@ const DashboardMobilMenu = ({ open, menuItems, logOutPath, dashboardLink }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { data: homeControls } = useGetHomeControlsQuery();
   const dispatch = useDispatch();
-  const { addToast } = useToasts();
   const { user } = useSelector((state) => state.auth);
 
   const logoHomeControl = homeControls?.find(
@@ -49,10 +47,7 @@ const DashboardMobilMenu = ({ open, menuItems, logOutPath, dashboardLink }) => {
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("token");
-    addToast("Logout successful", {
-      appearance: "success",
-      autoDismiss: true,
-    });
+    toast.success("Logout successful");
 
     Navigate(logOutPath);
   };

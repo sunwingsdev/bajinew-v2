@@ -1,6 +1,7 @@
 import Modal from "@/components/shared/Modal";
 import { logout } from "@/redux/slices/authSlice";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { BsClipboardHeart } from "react-icons/bs";
 import { CiUser } from "react-icons/ci";
 import { FaEye, FaEyeSlash, FaUsers, FaWhatsapp } from "react-icons/fa";
@@ -11,8 +12,7 @@ import { PiHandWithdraw, PiWallet } from "react-icons/pi";
 import { RiBitCoinLine, RiMessengerLine } from "react-icons/ri";
 import { VscNotebook } from "react-icons/vsc";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { Link, useNavigate } from "react-router";
 
 const Card = ({ contents, heading, handleModalOpen, closeModal }) => {
   const navigate = useNavigate();
@@ -76,16 +76,12 @@ const AccountDetailsMobile = ({ setDrawerOpen }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { addToast } = useToasts();
 
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("token");
     setDrawerOpen(false);
-    addToast("Logout successful", {
-      appearance: "success",
-      autoDismiss: true,
-    });
+    toast.success("Logout successful");
     navigate("/");
   };
 

@@ -1,7 +1,7 @@
 import { FaRegCirclePlay } from "react-icons/fa6";
 import { IoMdAlarm } from "react-icons/io";
 import { MdPushPin } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 const ExchangeDynamicTable = ({ tableData }) => {
   if (!tableData || tableData.length === 0) {

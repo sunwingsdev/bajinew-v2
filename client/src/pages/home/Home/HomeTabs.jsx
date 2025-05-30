@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGetAllCategoriesQuery } from "@/redux/features/allApis/categoryApi/categoryApi";
 import { useGetAllHomeGamesQuery } from "@/redux/features/allApis/homeGamesApi/homeGamesApi";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useGetAllSubCategoriesQuery } from "@/redux/features/allApis/categoryApi/subCategoryApi";
 
 const HomeTabs = () => {

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import flogo from "../../assets/affiliates/fb-1.png";
 import tlogo from "../../assets/affiliates/Telegram.png";
 import dlogo from "../../assets/affiliates/footer_logo.png";

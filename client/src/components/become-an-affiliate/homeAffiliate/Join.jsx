@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import mobileImage from "../../../assets/affiliates/mobile.png";
 
 const Join = () => {

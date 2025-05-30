@@ -1,9 +1,7 @@
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 import { IoCopyOutline } from "react-icons/io5";
 
 const PhoneCell = ({ phone }) => {
-  const { addToast } = useToasts();
-
   const formatPhoneForDisplay = (phone) => {
     if (!phone) return "N/A";
     return `0${phone}`.slice(0, 5) + "...";
@@ -14,10 +12,7 @@ const PhoneCell = ({ phone }) => {
       const formattedPhone = `0${phone}`;
       navigator.clipboard.writeText(formattedPhone);
 
-      addToast("Phone number copied to clipboard!", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Phone number copied to clipboard!");
     }
   };
 

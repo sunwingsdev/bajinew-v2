@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import moment from "moment";
 import { useGetUsersQuery } from "@/redux/features/allApis/usersApi/usersApi";
 import TablePagination from "@/components/dashboard/TablePagination";

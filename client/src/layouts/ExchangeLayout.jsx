@@ -3,7 +3,7 @@ import ExchangeRightSideContent from "@/components/exchange-page/ExchangeRightSi
 import ExchangeTopMenu from "@/components/exchange-page/ExchangeTopMenu";
 import Marquee from "react-fast-marquee";
 import { AiOutlineAudio } from "react-icons/ai";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 const ExchangeLayout = () => {
   return (
