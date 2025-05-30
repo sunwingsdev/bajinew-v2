@@ -1,5 +1,5 @@
 import Container from "@/components/shared/Container";
-import SiteInfoTabPanelContent from "@/components/siteInfo/SIteInfoTabPanelContent";
+import SiteInfoTabPanelContent from "@/components/siteInfo/SiteInfoTabPanelContent";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
@@ -285,7 +285,7 @@ const SiteInfo = () => {
             {tabsData?.map((tab, index) => (
               <TabPanel key={index}>
                 {tab.contentData ? (
-                  <SiteInfoTabPanelContent data={tab.contentData} />
+                  <SiteInfoTabPanelContent data={tab.contentData} /> 
                 ) : (
                   tab.content || <div>No content available</div>
                 )}
