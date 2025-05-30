@@ -27,7 +27,8 @@ const AllUsers = () => {
           user.phone.toLowerCase().includes(searchQuery.toLowerCase())) ||
         (user.email &&
           user.email.toLowerCase().includes(searchQuery.toLowerCase()))
-    );
+    )
+    ?.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const paginatedUsers = filteredUsers?.slice(
     (currentPage - 1) * rowsPerPage,
@@ -76,36 +77,6 @@ const AllUsers = () => {
           </button>
         </form>
       </div>
-
-      {/* Date Filters */}
-      {/* <div className="flex flex-wrap gap-4 mb-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            From Date:
-          </label>
-          <input
-            type="date"
-            value={dateRange.from}
-            onChange={(e) =>
-              setDateRange({ ...dateRange, from: e.target.value })
-            }
-            className="py-2 px-3 border rounded-md"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            To Date:
-          </label>
-          <input
-            type="date"
-            value={dateRange.to}
-            onChange={(e) =>
-              setDateRange({ ...dateRange, to: e.target.value })
-            }
-            className="py-2 px-3 border rounded-md"
-          />
-        </div>
-      </div> */}
 
       {/* Table */}
       <div className="overflow-x-auto">

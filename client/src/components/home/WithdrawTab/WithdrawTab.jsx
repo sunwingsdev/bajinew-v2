@@ -71,10 +71,31 @@ const WithdrawTab = () => {
     }
 
     const totalAmount = formData.amount.reduce((acc, amt) => acc + amt, 0);
+
+    // Check required userInputs
+    const selectedGateway = withdrawMethods?.find(
+      (g) => g.method === formData.paymentMethod
+    );
+
+    const requiredFields = selectedGateway?.userInputs?.filter(
+      (input) => input.isRequired === "required"
+    );
+
+    const isMissingField = requiredFields?.some(
+      (input) =>
+        !dynamicInputs[input.name] || dynamicInputs[input.name]?.trim() === ""
+    );
+
+    if (isMissingField) {
+      toast.error("Please fill all required fields.");
+      return;
+    }
+
     const withdrawData = {
       ...formData,
       amount: totalAmount,
       userId: user?._id,
+      userInputs: dynamicInputs,
     };
 
     if (singleUser?.balance <= totalAmount) {
@@ -149,7 +170,6 @@ const WithdrawTab = () => {
                     [e.target.name]: e.target.value,
                   }))
                 }
-                value={formData[inputField.name] || ""}
               />
               {inputField.fieldInstruction && (
                 <p className="text-xs text-gray-400">
