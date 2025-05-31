@@ -1,8 +1,9 @@
 import Container from "@/components/shared/Container";
 import { useGetAllHomeGamesQuery } from "@/redux/features/allApis/homeGamesApi/homeGamesApi";
+
 import { useParams } from "react-router";
 
-const DemoGame = () => {
+const PlayGame = () => {
   const { id } = useParams();
 
   const { data: allHomeGames } = useGetAllHomeGamesQuery();
@@ -26,4 +27,4 @@ const DemoGame = () => {
   );
 };
 
-export default DemoGame;
+export default PlayGame;
