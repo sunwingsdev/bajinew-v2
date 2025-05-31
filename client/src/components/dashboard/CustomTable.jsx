@@ -4,9 +4,9 @@ const CustomTable = ({ title, headers, data, borderColor }) => {
   const itemsPerPage = 4;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentData = data.slice(startIndex, startIndex + itemsPerPage);
+  const currentData = data?.slice(startIndex, startIndex + itemsPerPage);
 
   const handleClick = (page) => {
     if (page >= 1 && page <= totalPages) {
@@ -78,7 +78,7 @@ const CustomTable = ({ title, headers, data, borderColor }) => {
               </tr>
             </thead>
             <tbody>
-              {currentData.map((row, rowIndex) => (
+              {currentData?.map((row, rowIndex) => (
                 <tr
                   key={rowIndex}
                   className={`hover:bg-gray-100 ${
@@ -90,7 +90,9 @@ const CustomTable = ({ title, headers, data, borderColor }) => {
                       key={colIndex}
                       className="border p-3 text-sm text-gray-700 whitespace-nowrap"
                     >
-                      {value}
+                      {typeof value === "object"
+                        ? JSON.stringify(value)
+                        : value}
                     </td>
                   ))}
                 </tr>
