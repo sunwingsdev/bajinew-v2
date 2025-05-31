@@ -169,6 +169,75 @@ const DashboardLayout = () => {
       ],
     },
   ];
+
+  const submenus = [
+    {
+      label: "Sprots Live TV",
+      value: "sprots_live_tv",
+      to: "/dashboard/gamesApi/sports-live-tv",
+    },
+    {
+      label: "BetFair API",
+      value: "betfair",
+      to: "/dashboard/gamesApi/betfair-api",
+    },
+    {
+      label: "Sports Radar API",
+      value: "sports_radar",
+      to: "/dashboard/gamesApi/sports-radar-api",
+    },
+    {
+      label: "Odds Jam API",
+      value: "odds_jam",
+      to: "/dashboard/gamesApi/odds-jam-api",
+    },
+    {
+      label: "Bet Construct API",
+      value: "bet_construct",
+      to: "/dashboard/gamesApi/bet-construct-api",
+    },
+    { label: "Kambi API", value: "kambi", to: "/dashboard/gamesApi/kambi-api" },
+    {
+      label: "Pinnacle API",
+      value: "pinnacle",
+      to: "/dashboard/gamesApi/pinnacle-api",
+    },
+    {
+      label: "SoftSwiss API",
+      value: "softswiss",
+      to: "/dashboard/gamesApi/softswiss-api",
+    },
+    {
+      label: "Betradar API",
+      value: "betradar",
+      to: "/dashboard/gamesApi/betradar-api",
+    },
+    {
+      label: "Evolution API",
+      value: "evolution",
+      to: "/dashboard/gamesApi/evolution-api",
+    },
+    {
+      label: "Pragmatic Play API",
+      value: "pragmatic_play",
+      to: "/dashboard/gamesApi/pragmatic-play-api",
+    },
+    {
+      label: "Playtech API",
+      value: "playtech",
+      to: "/dashboard/gamesApi/playtech-api",
+    },
+    {
+      label: "NetEnt API",
+      value: "netent",
+      to: "/dashboard/gamesApi/netent-api",
+    },
+    {
+      label: "Betsoft Gaming API",
+      value: "betsoft",
+      to: "/dashboard/gamesApi/betsoft-gaming-api",
+    },
+  ];
   return (
     <div className="flex">
       {/* DashboardSidebar */}
@@ -185,7 +254,7 @@ const DashboardLayout = () => {
           logOutPath="/admin"
         />
         <div className="mt-[62px] md:mt-14 p-3">
-          <Outlet />
+          <Outlet context={{ submenus }} />
         </div>
       </div>
     </div>
