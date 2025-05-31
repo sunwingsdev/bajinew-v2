@@ -1,4 +1,9 @@
-import Modal from "@/components/shared/Modal";
+import { useState } from "react";
+import { IoMdCloseCircleOutline } from "react-icons/io";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 import { useGetAllCategoriesQuery } from "@/redux/features/allApis/categoryApi/categoryApi";
 import {
   useAddGameMutation,
@@ -6,16 +11,13 @@ import {
   useGetAllHomeGamesQuery,
   useUpdateHomeGameMutation,
 } from "@/redux/features/allApis/homeGamesApi/homeGamesApi";
-import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
-import { useState } from "react";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import "react-tabs/style/react-tabs.css";
 import { useGetAllSubCategoriesQuery } from "@/redux/features/allApis/categoryApi/subCategoryApi";
-import Swal from "sweetalert2";
-import toast from "react-hot-toast";
+import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
+import Modal from "@/components/shared/Modal";
+import { useOutletContext } from "react-router";
 
 const AddGamesOnGamesApiKey = () => {
+  const { submenus } = useOutletContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
   const [isEditMode, setIsEditMode] = useState(false);
@@ -23,8 +25,10 @@ const AddGamesOnGamesApiKey = () => {
   const [gameId, setGameId] = useState(null);
   const [gameName, setGameName] = useState("");
   const [gameLink, setGameLink] = useState("");
+  const [gameDemoLink, setGameDemoLink] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
+  const [gameApi, setGameApi] = useState("");
   const [loading, setLoading] = useState(false);
 
   const { data: allCategories } = useGetAllCategoriesQuery();
@@ -41,8 +45,10 @@ const AddGamesOnGamesApiKey = () => {
     setGameId(game._id);
     setGameName(game.name);
     setGameLink(game.link);
+    setGameDemoLink(game.demoLink);
     setSelectedCategory(game.category);
     setSelectedSubCategory(game.subCategory);
+    setGameApi(game.gameApi);
     setImagePreview(`${import.meta.env.VITE_BASE_API_URL}${game.image}`);
     setIsEditMode(true);
     setIsModalOpen(true);
@@ -80,8 +86,10 @@ const AddGamesOnGamesApiKey = () => {
       const gameInfo = {
         name: gameName,
         link: gameLink,
+        demoLink: gameDemoLink,
         category: selectedCategory,
         subCategory: selectedSubCategory,
+        gameApi: gameApi,
         image: imagePath,
       };
 
@@ -112,8 +120,10 @@ const AddGamesOnGamesApiKey = () => {
     setGameId(null);
     setGameName("");
     setGameLink("");
+    setGameDemoLink("");
     setSelectedCategory("");
     setSelectedSubCategory("");
+    setGameApi("");
     setIconFile(null);
     setImagePreview(null);
     setIsEditMode(false);
@@ -139,7 +149,7 @@ const AddGamesOnGamesApiKey = () => {
           toast.error("Failed to delete the game");
         }
       } catch (error) {
-        toast.error("Error deleting game");
+        toast.error(error || "Error deleting game");
       }
     }
   };
@@ -321,6 +331,18 @@ const AddGamesOnGamesApiKey = () => {
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 font-medium mb-1">
+              Game Demo Link
+            </label>
+            <input
+              type="text"
+              className="w-full p-2 border rounded-md focus:ring focus:ring-green-300"
+              placeholder="Enter game link"
+              value={gameDemoLink}
+              onChange={(e) => setGameDemoLink(e.target.value)}
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-1">
               Category
             </label>
             <select
@@ -366,6 +388,25 @@ const AddGamesOnGamesApiKey = () => {
                   No sub category available
                 </option>
               )}
+            </select>
+          </div>
+
+          <div className="mb-4">
+            <label className="block text-gray-700 font-medium mb-1">
+              Games Api Key
+            </label>
+            <select
+              name="gamesApiKey"
+              className="w-full p-2 border rounded-md focus:ring focus:ring-green-300"
+              value={gameApi}
+              onChange={(e) => setGameApi(e.target.value)}
+            >
+              <option value="">Select one</option>
+              {submenus?.map((submenu, i) => (
+                <option key={i} value={submenu?.value}>
+                  {submenu?.label}
+                </option>
+              ))}
             </select>
           </div>
 
