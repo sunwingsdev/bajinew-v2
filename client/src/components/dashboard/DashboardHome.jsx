@@ -267,7 +267,7 @@ const DashboardHome = () => {
     amount: deposit?.amount,
     phone: deposit?.userInfo?.phone,
     createdAt: new Date(deposit.createdAt).toLocaleString(),
-    promotion: deposit?.promotion,
+    promotion: deposit?.promotion?.title || "No Promotion",
     reason: deposit?.reason,
     status: deposit?.status,
   }));
