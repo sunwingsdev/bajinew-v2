@@ -82,6 +82,7 @@ import WithdrawMethod from "@/pages/dashboard/BankingWithdraw/WithdrawMethod";
 import EditWithdrawMethodForm from "@/components/dashboard/bankingWithdraw/withdrawMethod/EditWithdrawMethodForm";
 import SiteInfo from "@/pages/siteInfo/SiteInfo";
 import BalanceHistories from "@/pages/dashboard/users/BalanceHistories";
+import PlayGame from "@/pages/home/PlayGame/PlayGame";
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,7 @@ const router = createBrowserRouter([
       { path: "/register", element: <Register /> },
       { path: "/category/:category", element: <CategoryPage /> },
       { path: "/category/demo/:id", element: <DemoGame /> },
+      { path: "/category/play/:id", element: <PlayGame /> },
       { path: "/promotional-offer", element: <PromotionalOffer /> },
       { path: "/vip", element: <Vip /> },
       { path: "/referral", element: <Referral /> },
