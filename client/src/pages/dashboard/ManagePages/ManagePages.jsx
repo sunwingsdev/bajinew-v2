@@ -2,7 +2,6 @@ import { useForm, Controller } from "react-hook-form";
 import ReactSelect from "react-select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useToasts } from "react-toast-notifications";
 import { useState } from "react";
 import {
   useAddPageDetailsMutation,
@@ -11,6 +10,7 @@ import {
   useUpdatePageDetailMutation,
 } from "@/redux/features/allApis/pagesApi/pagesApi";
 import DeleteModal from "@/components/shared/Modals/DeleteModal";
+import toast from "react-hot-toast";
 
 const routeOptions = [
   { value: "about-us", label: "About Us" },
@@ -27,7 +27,6 @@ const ManagePages = () => {
   const [addPageDetails] = useAddPageDetailsMutation();
   const [deletePageDetail] = useDeletePageDetailMutation();
   const [updatePageDetail] = useUpdatePageDetailMutation();
-  const { addToast } = useToasts();
   const [editingPage, setEditingPage] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [item, setItem] = useState(null);
@@ -51,30 +50,18 @@ const ManagePages = () => {
         pageDetails,
       });
       if (result.error) {
-        addToast("Failed to update page.", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to update page.");
       } else {
-        addToast("Page updated successfully.", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Page updated successfully.");
         setEditingPage(null);
       }
     } else {
       // Add new page details
       const result = await addPageDetails(pageDetails);
       if (result.error) {
-        addToast("Failed to add page.", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to add page.");
       } else {
-        addToast("Page added successfully.", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Page added successfully.");
       }
     }
     reset();
@@ -99,15 +86,9 @@ const ManagePages = () => {
   const handleDelete = async () => {
     const result = await deletePageDetail(item?._id);
     if (result.error) {
-      addToast("Failed to delete the page.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to delete the page.");
     } else {
-      addToast("Page deleted successfully.", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Page deleted successfully.");
       setIsOpen(false);
     }
   };

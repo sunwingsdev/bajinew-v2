@@ -2,7 +2,7 @@ import { useGetKycByIdQuery } from "@/redux/features/allApis/kycApi/kycApi";
 import { useGetPaymentMethodsQuery } from "@/redux/features/allApis/paymentMethodApi/paymentMethodApi";
 import { useAddPaymentNumberMutation } from "@/redux/features/allApis/paymentNumberApi/paymentNumberApi";
 import { useForm } from "react-hook-form";
-import { useToasts } from "react-toast-notifications";
+import toast from "react-hot-toast";
 
 const AddPaymentMethodandNumberforAgent = ({ id }) => {
   const {
@@ -13,7 +13,6 @@ const AddPaymentMethodandNumberforAgent = ({ id }) => {
     watch,
   } = useForm();
 
-  const { addToast } = useToasts();
   const [addPaymentNumber, { isLoading }] = useAddPaymentNumberMutation();
   const { data: gateways } = useGetPaymentMethodsQuery();
   const { data: singleKyc } = useGetKycByIdQuery(id);
@@ -29,18 +28,12 @@ const AddPaymentMethodandNumberforAgent = ({ id }) => {
     try {
       const response = await addPaymentNumber(formattedData);
       if (response) {
-        addToast("Payment Number added successfully", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Payment Number added successfully");
       }
       reset();
     } catch (error) {
       console.log(error);
-      addToast("Failed to add payment number", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to add payment number");
     }
   };
 

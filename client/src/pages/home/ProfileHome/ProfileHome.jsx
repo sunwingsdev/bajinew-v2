@@ -1,5 +1,5 @@
 import WalletSection from "@/components/home/WalletSection/WalletSection";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { FaUser } from "react-icons/fa";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoMdMail } from "react-icons/io";

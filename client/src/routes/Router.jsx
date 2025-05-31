@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router";
 import MainLayout from "../layouts/MainLayout";
 import Home from "../pages/home/Home/Home";
 import Register from "@/pages/home/Register/Register";
@@ -81,6 +81,7 @@ import Pages from "@/pages/pages-on-footer/Pages";
 import WithdrawMethod from "@/pages/dashboard/BankingWithdraw/WithdrawMethod";
 import EditWithdrawMethodForm from "@/components/dashboard/bankingWithdraw/withdrawMethod/EditWithdrawMethodForm";
 import SiteInfo from "@/pages/siteInfo/SiteInfo";
+import BalanceHistories from "@/pages/dashboard/users/BalanceHistories";
 
 const router = createBrowserRouter([
   {
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
       {
         path: "users",
         element: <AllUsers />,
+      },
+      {
+        path: "balance-histories",
+        element: <BalanceHistories />,
       },
       { path: "profile/:id", element: <AdminProfile /> },
       { path: "cashagent", element: <CashAgent /> },

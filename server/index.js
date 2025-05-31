@@ -50,7 +50,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // middlewares
 app.use(cors(corsConfig));
-app.options("*", cors(corsConfig));
+app.options("", cors(corsConfig));
 app.use(express.json());
 
 // MongoDB URI and client setup
@@ -95,7 +95,7 @@ async function run() {
   try {
     await client.connect();
 
-    // Database
+    //Database
     const database = client.db("bajinewv2");
 
     // Collections

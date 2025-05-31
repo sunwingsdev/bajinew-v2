@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosEye, IoIosEyeOff } from "react-icons/io";
 import { useDispatch } from "react-redux";
-import { useToasts } from "react-toast-notifications";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { useLazyGetAuthenticatedUserQuery } from "@/redux/features/allApis/usersApi/usersApi";
 import { setCredentials } from "@/redux/slices/authSlice";
 import { useLoginAgentMutation } from "@/redux/features/allApis/usersApi/agentsApi";
+import toast from "react-hot-toast";
 
 const AgentLoginForm = ({ onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +22,6 @@ const AgentLoginForm = ({ onClose }) => {
   const [loginAgent, { isLoading }] = useLoginAgentMutation();
   const [getUser] = useLazyGetAuthenticatedUserQuery();
   const navigate = useNavigate();
-  const { addToast } = useToasts();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -55,10 +54,7 @@ const AgentLoginForm = ({ onClose }) => {
             },
           });
         } else {
-          addToast(errorMessage, {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error(errorMessage);
         }
 
         return; // Exit the function if there's an error
@@ -67,10 +63,7 @@ const AgentLoginForm = ({ onClose }) => {
       if (loginData.token) {
         const { data: userData } = await getUser(loginData.token);
         dispatch(setCredentials({ token: loginData.token, user: userData }));
-        addToast("Login successful", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Login successful");
 
         if (userData?.role === "agent") {
           navigate("/cashagent");
@@ -79,10 +72,7 @@ const AgentLoginForm = ({ onClose }) => {
         }
       }
     } catch (error) {
-      addToast("Unexpected error occurred.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Unexpected error occurred.");
     } finally {
       reset();
       onClose();

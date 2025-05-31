@@ -1,13 +1,13 @@
 import { GrStatusGood, GrStatusWarning } from "react-icons/gr";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useToasts } from "react-toast-notifications";
 import { uploadImage } from "@/hooks/files";
 import {
   useAddKycMutation,
   useGetKycByIdQuery,
 } from "@/redux/features/allApis/kycApi/kycApi";
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 const CashAgentKycUpdate = ({ id }) => {
   const { handleSubmit, reset } = useForm();
@@ -16,7 +16,6 @@ const CashAgentKycUpdate = ({ id }) => {
   const [backImagePreview, setBackImagePreview] = useState(null);
   const [addKyc, { isLoading: addKycLoading }] = useAddKycMutation();
   const { data: singleKyc } = useGetKycByIdQuery(id);
-  const { addToast } = useToasts();
 
   const handleFileChange = (e, type) => {
     const file = e.target.files[0];
@@ -42,24 +41,15 @@ const CashAgentKycUpdate = ({ id }) => {
       try {
         const response = await addKyc(formattedData);
         if (response) {
-          addToast("KYC uploaded successfully", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("KYC uploaded successfully");
         }
         reset();
       } catch (error) {
         console.log(error);
-        addToast("Failed to upload KYC", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to upload KYC");
       }
     } else {
-      addToast("Please upload both front and back images", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please upload both front and back images");
     }
   };
 

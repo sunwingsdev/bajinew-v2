@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useToasts } from "react-toast-notifications";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import AddPaymentMethodandNumberforAdmin from "./AddPaymentMethodandNumberforAdmin";
+import toast from "react-hot-toast";
 
 const AdminProfileInfo = ({ id, singleUser, updateUser, isLoading }) => {
   const location = useLocation();
@@ -13,17 +13,12 @@ const AdminProfileInfo = ({ id, singleUser, updateUser, isLoading }) => {
     formState: { errors },
   } = useForm();
 
-  const { addToast } = useToasts();
-
   const onSubmit = async (data) => {
     const { password, confirmPassword, ...updatedUser } = data;
 
     // Validate password and confirm password
     if (password !== confirmPassword) {
-      addToast("Passwords do not match!", {
-        appearance: "warning",
-        autoDismiss: true,
-      });
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -33,17 +28,10 @@ const AdminProfileInfo = ({ id, singleUser, updateUser, isLoading }) => {
         id,
         data: { ...updatedUser, ...(password && { password }) }, // Conditionally include password
       }).unwrap();
-      addToast("Information updated successfully!", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Information updated successfully!");
     } catch (error) {
-      addToast(
-        error?.data?.message || "Failed to update Info. Please try again.",
-        {
-          appearance: "error",
-          autoDismiss: true,
-        }
+      toast.error(
+        error?.data?.message || "Failed to update Info. Please try again."
       );
     }
   };

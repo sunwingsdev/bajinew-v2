@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 import Aos from "aos";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 import SingleBecomeAnAgent from "@/components/become-an-agent/SingleBecomeAnAgent";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import AgentSignupForm from "@/components/become-an-agent/AgentSignUpForm";
 import AgentLoginForm from "@/components/become-an-agent/AgenLoginForm";
 import AccountModal from "@/components/shared/Modals/AccountModal";

@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { useToasts } from "react-toast-notifications";
 import { IoIosArrowDown, IoIosArrowForward, IoMdMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { FaRegCircle, FaRegUserCircle } from "react-icons/fa";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 import { logout } from "@/redux/slices/authSlice";
 import OppsModal from "../shared/Modals/OppsModal";
+import toast from "react-hot-toast";
 
 const CashAgentMobileMenu = ({
   open,
@@ -23,7 +23,6 @@ const CashAgentMobileMenu = ({
   const [openSubmenu, setOpenSubmenu] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const caSidebarRef = useRef(null);
-  const { addToast } = useToasts();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
@@ -70,10 +69,7 @@ const CashAgentMobileMenu = ({
 
   const handleMenuClick = (menu) => {
     if (!user && !token) {
-      addToast("Please login to access this page", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please login to access this page");
     } else if (menu?.path && !menu?.submenu) {
       navigate(menu?.path);
       closeSidebar();
@@ -86,10 +82,7 @@ const CashAgentMobileMenu = ({
 
   const handleSubmenuClick = (submenu) => {
     if (!user && !token) {
-      addToast("Please login to access this page", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please login to access this page");
     }
     if (submenu?.path) {
       navigate(submenu?.path);
@@ -102,11 +95,7 @@ const CashAgentMobileMenu = ({
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("token");
-    addToast("Logout successful", {
-      appearance: "success",
-      autoDismiss: true,
-    });
-
+    toast.success("Logout successful");
     navigate(logOutPath);
   };
 

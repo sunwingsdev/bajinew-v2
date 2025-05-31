@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 import { FaFacebook, FaTelegram } from "react-icons/fa";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 import { useGetPagesDetailQuery } from "@/redux/features/allApis/pagesApi/pagesApi";

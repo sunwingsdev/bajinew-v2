@@ -2,7 +2,7 @@ import { IoMdHome } from "react-icons/io";
 import { useState } from "react";
 import CashAgentSidebar from "@/components/cash-agent/CashAgentSidebar";
 import CashAgentMobileMenu from "@/components/cash-agent/CashAgentMobileMenu";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 
 const CashAgentLayout = () => {
   const [open, setOpen] = useState(true);

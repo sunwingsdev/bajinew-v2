@@ -15,9 +15,8 @@ import { Button } from "@/components/ui/button";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa6";
 import { RxReload } from "react-icons/rx";
 import { ImCheckmark } from "react-icons/im";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { FaChevronLeft, FaEye, FaEyeSlash, FaTimes } from "react-icons/fa";
-import { useToasts } from "react-toast-notifications";
 import {
   useAddUserMutation,
   useLazyGetAuthenticatedUserQuery,
@@ -26,6 +25,7 @@ import {
 import SpinLoader from "@/components/shared/loaders/Spinloader";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "@/redux/slices/authSlice";
+import toast from "react-hot-toast";
 
 const generateRandomCode = () => {
   return Math.floor(1000 + Math.random() * 9000).toString(); // 4-digit code
@@ -62,7 +62,6 @@ const Register = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { addToast } = useToasts();
 
   const handleNext = (e) => {
     e.preventDefault();
@@ -75,16 +74,10 @@ const Register = () => {
       if (formData.password === formData.confirmPassword) {
         setStep(2);
       } else {
-        addToast("Please match the password and confirm password", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Please match the password and confirm password");
       }
     } else {
-      addToast("Please fill in all the fields.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please fill in all the fields.");
     }
   };
 
@@ -100,12 +93,8 @@ const Register = () => {
       if (/^[a-zA-Z0-9]*$/.test(value)) {
         setFormData({ ...formData, [id]: value });
       } else {
-        addToast(
-          "Only letters and numbers are allowed. No spaces or special characters.",
-          {
-            appearance: "error",
-            autoDismiss: true,
-          }
+        toast.error(
+          "Only letters and numbers are allowed. No spaces or special characters."
         );
       }
     } else {
@@ -149,26 +138,17 @@ const Register = () => {
           } catch (err) {
             console.error("Login failed:", err);
           }
-          addToast("Registration successful", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Registration successful");
           setLoading(false);
           navigate("/");
         }
       } catch (error) {
-        console.log(error.message);
-        addToast(error.message, {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error(error.message);
+
         setLoading(false);
       }
     } else {
-      addToast("Verification code does not match.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Verification code does not match.");
     }
   };
 

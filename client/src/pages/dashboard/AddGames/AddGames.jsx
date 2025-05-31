@@ -7,10 +7,10 @@ import {
 import { useUploadImageMutation } from "@/redux/features/allApis/uploadApi/uploadApi";
 import { useState } from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { useToasts } from "react-toast-notifications";
 // import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 import { useGetAllSubCategoriesQuery } from "@/redux/features/allApis/categoryApi/subCategoryApi";
+import toast from "react-hot-toast";
 
 const AddGames = ({ isOpen, setIsOpen, selectedApiName }) => {
   const [imagePreview, setImagePreview] = useState(null);
@@ -27,7 +27,6 @@ const AddGames = ({ isOpen, setIsOpen, selectedApiName }) => {
 
   const [uploadImage] = useUploadImageMutation();
   const [addGame] = useAddGameMutation();
-  const { addToast } = useToasts();
 
   const selectedApi = selectedApiName?.replace(/API/gi, "").trim();
 
@@ -61,10 +60,7 @@ const AddGames = ({ isOpen, setIsOpen, selectedApiName }) => {
           };
           const result = await addGame(gameInfo);
           if (result.data.insertedId) {
-            addToast("Game created successfully", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Game created successfully");
             setImagePreview(null);
             setIconFile(null);
             setGameName("");
@@ -75,19 +71,12 @@ const AddGames = ({ isOpen, setIsOpen, selectedApiName }) => {
             setIsOpen(false);
           }
         }
-        // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setLoading(false);
-        addToast("Failed to create game", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to create game");
       }
     } else {
-      addToast("Failed to create game", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Failed to create game");
     }
   };
 

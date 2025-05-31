@@ -4,7 +4,7 @@ import { PiWallet } from "react-icons/pi";
 import { RiIdCardLine } from "react-icons/ri";
 import { IoMdHome } from "react-icons/io";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import AccountDetailsMobile from "../AccountDetailsMobile/AccountDetailsMobile";
 
 const MenuMobile = () => {

@@ -2,8 +2,7 @@ import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { ClipLoader } from "react-spinners";
 import { BiLogInCircle } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { Link } from "react-router";
 import { PhotoView } from "react-photo-view";
 import "react-photo-view/dist/react-photo-view.css";
 import EmailCell from "@/components/dashboard/dashboardSidebar/CashAgent/EmailCell";
@@ -13,6 +12,7 @@ import {
   useGetAllKycsQuery,
   useUpdateKycStatusMutation,
 } from "@/redux/features/allApis/kycApi/kycApi";
+import toast from "react-hot-toast";
 
 const Kyc = () => {
   const { data: allKycs, isLoading, error } = useGetAllKycsQuery();
@@ -21,7 +21,6 @@ const Kyc = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 10;
   const [searchQuery, setSearchQuery] = useState("");
-  const { addToast } = useToasts();
 
   const filteredKycs = allKycs?.filter((kyc) =>
     kyc?.userInfo?.fullName?.toLowerCase()?.includes(searchQuery?.toLowerCase())
@@ -48,22 +47,12 @@ const Kyc = () => {
       const response = await updateKycStatus({ id: kycId, status: newStatus });
 
       if (response?.data?.message) {
-        addToast(response.data.message, {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success(response.data.message);
       } else {
-        addToast("Failed to update status", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to update status");
       }
     } catch (error) {
-      console.log(error);
-      addToast("An error occurred while updating the status.", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "An error occurred while updating the status.");
     }
   };
 

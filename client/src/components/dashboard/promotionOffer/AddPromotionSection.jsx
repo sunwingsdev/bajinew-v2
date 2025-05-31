@@ -3,11 +3,11 @@ import { useForm, Controller } from "react-hook-form";
 import Select from "react-select";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useToasts } from "react-toast-notifications";
 import { useAddPromotionMutation } from "@/redux/features/allApis/promotionApi/promotionApi";
 import { uploadImage } from "@/hooks/files";
 import { Button } from "@/components/ui/button";
 import { useGetAllPromotionCategoriesQuery } from "@/redux/features/allApis/promotionApi/promotionCategoryApi";
+import toast from "react-hot-toast";
 
 const AddPromotionSection = () => {
   const { handleSubmit, control, register, reset, watch } = useForm();
@@ -15,7 +15,6 @@ const AddPromotionSection = () => {
     useAddPromotionMutation();
   const { data: categories, isLoading } = useGetAllPromotionCategoriesQuery();
   const [file, setFile] = useState(null);
-  const { addToast } = useToasts();
 
   const promotionCategories = categories?.filter(
     (category) => category.categoryType === "promotion"
@@ -37,24 +36,15 @@ const AddPromotionSection = () => {
       try {
         const { data } = await addPromotion(formattedData);
         if (data.insertedId) {
-          addToast("Promotion added successfully", {
-            appearance: "success",
-            autoDismiss: true,
-          });
+          toast.success("Promotion added successfully");
           reset();
           setFile(null);
         }
       } catch (error) {
-        addToast("Failed to add promotion", {
-          appearance: "error",
-          autoDismiss: true,
-        });
+        toast.error("Failed to add promotion");
       }
     } else {
-      addToast("Please select an image", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error("Please select an image");
     }
   };
 

@@ -1,12 +1,11 @@
 import { useForm } from "react-hook-form";
-import { useToasts } from "react-toast-notifications";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { ClipLoader } from "react-spinners";
 import affiliateBg from "../../assets/affiliates/affiliateBg.jpg";
 import { useAddAffiliateMutation } from "@/redux/features/allApis/usersApi/affiliatesApi";
+import toast from "react-hot-toast";
 
 const AffiliateSignUp = () => {
-  const { addToast } = useToasts();
   const {
     register,
     handleSubmit,
@@ -26,14 +25,10 @@ const AffiliateSignUp = () => {
 
     try {
       const response = await addAffiliate(finalData).unwrap();
-      addToast("Affiliate Registration successfully!", {
-        appearance: "success",
-      });
+      toast.success("Affiliate Registration successfully!");
       navigate("/affiliatesdashboard");
     } catch (error) {
-      addToast(error?.data?.message || "Something went wrong!", {
-        appearance: "error",
-      });
+      toast.error(error?.data?.message || "Something went wrong!");
       console.error("Error:", error);
     }
   };

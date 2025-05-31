@@ -6,7 +6,7 @@ import logo4 from "../../../assets/v2/bologna-fc-1909-n8kXOhaz.png";
 // import iconAll from "../../../assets/v2/icon-all-provider.svg";
 import partnerLogo from "../../../assets/v2/afc-bournemouth.png";
 import { IoIosMenu, IoMdHelpCircleOutline } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { FaArrowRightFromBracket } from "react-icons/fa6";
 import { AnimatePresence, motion } from "motion/react";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";

@@ -12,7 +12,7 @@ import { HiOutlineBuildingLibrary } from "react-icons/hi2";
 import { GoArrowSwitch } from "react-icons/go";
 import { FiPlusCircle, FiMinusCircle } from "react-icons/fi";
 import { RiLoginCircleLine } from "react-icons/ri";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import {
   useLazyGetUserByIdQuery,
   useUpdateUserStatusMutation,

@@ -1,20 +1,10 @@
-import { useState } from "react";
-import { SlGameController } from "react-icons/sl";
-import { GiGamepadCross, GiRibbonMedal } from "react-icons/gi";
-import { BsFront } from "react-icons/bs";
-import { FaAffiliatetheme, FaAngleDown, FaRegCircle } from "react-icons/fa";
-import { IoIosArrowBack, IoMdHome } from "react-icons/io";
-import { PiCashRegister } from "react-icons/pi";
-import { Link } from "react-router-dom";
-import { FaUsers } from "react-icons/fa";
-import { BsPiggyBank, BsShop, BsBank } from "react-icons/bs";
-import {
-  IoLogoWechat,
-  IoSettingsSharp,
-  IoGameController,
-} from "react-icons/io5";
 import Modal from "@/components/shared/Modal";
 import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
+import { useState } from "react";
+import { FaAngleDown, FaRegCircle } from "react-icons/fa";
+import { IoIosArrowBack, IoMdHome } from "react-icons/io";
+
+import { Link } from "react-router";
 
 const DashboardSidebar = ({ open, setOpen, menuItems }) => {
   const { data: homeControls } = useGetHomeControlsQuery();
@@ -62,7 +52,7 @@ const DashboardSidebar = ({ open, setOpen, menuItems }) => {
         } hidden md:block duration-300 h-screen fixed`}
       >
         {/* Start Top collapse */}
-        <div className={`bg-zinc-800 py-3 ${!open && "py-5"}`}>
+        <div className={`bg-primary-primaryColorTwo py-3 ${!open && "py-5"}`}>
           <div className="flex gap-x-3 items-center justify-center">
             <div className={`flex gap-1 ${!open && "hidden"}`}>
               <Link
@@ -97,7 +87,7 @@ const DashboardSidebar = ({ open, setOpen, menuItems }) => {
 
       {/* Start Menu bar */}
       <div
-        className={`bg-[#14815f] overflow-y-auto fixed mt-[62px] hidden md:block pb-16 ${
+        className={`bg-primary-primaryColorTwo overflow-y-auto fixed mt-[62px] hidden md:block pb-16 ${
           open ? "w-64" : "w-16"
         } text-sm text-white duration-300 font-semibold h-full scrollbar-hide`}
       >
@@ -109,7 +99,7 @@ const DashboardSidebar = ({ open, setOpen, menuItems }) => {
               to={item.to || "#"}
             >
               <div
-                className={`px-4 py-3 flex items-center gap-2 border-b border-gray-700 duration-300 hover:bg-[#114d3a] hover:border-l-4 hover:border-l-slate-400 ${
+                className={`px-4 py-3 flex items-center gap-2 border-b border-gray-700 duration-300 hover:bg-bottomNavBgColor hover:border-l-4 hover:border-l-slate-400 ${
                   !open && "justify-center"
                 }`}
                 onClick={() => item.submenu && toggleSubmenu(item.label)}
@@ -126,7 +116,7 @@ const DashboardSidebar = ({ open, setOpen, menuItems }) => {
 
             {/* Only show submenu when "Games Control" is clicked */}
             {item.submenu && submenuOpen === item.label && open && (
-              <div className="pl-8 text-white text-sm font-semibold bg-[#114d3a] duration-300">
+              <div className="pl-8 text-white text-sm font-semibold bg-primary-primaryColor duration-300">
                 {item.submenu.map((subItem, subIndex) => (
                   <Link
                     onClick={!subItem.to && !subItem.submenu && handleModalOpen}

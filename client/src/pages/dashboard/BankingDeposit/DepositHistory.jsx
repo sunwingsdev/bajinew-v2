@@ -4,9 +4,9 @@ import {
   useUpdateDepositStatusMutation,
 } from "@/redux/features/allApis/depositsApi/depositsApi";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { useToasts } from "react-toast-notifications";
+import { Link } from "react-router";
 
 const DepositHistory = () => {
   const { data: allDeposits, isLoading, isError } = useGetDepositsQuery();
@@ -14,7 +14,6 @@ const DepositHistory = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedDeposit, setSelectedDeposit] = useState(null);
   const [status, setStatus] = useState("");
-  const { addToast } = useToasts();
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -47,17 +46,11 @@ const DepositHistory = () => {
         .unwrap()
         .then((res) => {
           if (res.modifiedCount > 0) {
-            addToast("Status updated!", {
-              appearance: "success",
-              autoDismiss: true,
-            });
+            toast.success("Status updated!");
           }
         })
         .catch(() => {
-          addToast("Error updating status", {
-            appearance: "error",
-            autoDismiss: true,
-          });
+          toast.error("Error updating status");
         });
     }
   };
@@ -74,17 +67,11 @@ const DepositHistory = () => {
       const res = await updateStatus(statusInfo).unwrap();
       console.log(res);
       if (res.modifiedCount > 0) {
-        addToast("Status updated!", {
-          appearance: "success",
-          autoDismiss: true,
-        });
+        toast.success("Status updated!");
         setModalOpen(false);
       }
     } catch (error) {
-      addToast("Error updating status", {
-        appearance: "error",
-        autoDismiss: true,
-      });
+      toast.error(error || "Error updating status");
     }
   };
 
@@ -224,19 +211,19 @@ const DepositHistory = () => {
                   {deposit.amount} ৳
                 </td>
                 <td className="p-3 border-r border-r-blue-300">
-                  <div>
-                    <p>
-                      <span className="font-medium">
-                        {deposit.userInputs?.senderNumber && "Number"}:
-                      </span>{" "}
-                      {deposit.userInputs?.senderNumber || "N/A"}
-                    </p>
-                    <p>
-                      <span className="font-medium">
-                        {deposit.userInputs?.transactionId && "Trnx ID"}:
-                      </span>{" "}
-                      {deposit.userInputs?.transactionId || "N/A"}
-                    </p>
+                  <div className="space-y-1">
+                    {deposit.userInputs
+                      ? Object.entries(deposit.userInputs).map(
+                          ([key, value]) => (
+                            <p key={key}>
+                              <span className="font-medium capitalize">
+                                {key.replace(/([A-Z])/g, " $1")}:
+                              </span>{" "}
+                              {value || "N/A"}
+                            </p>
+                          )
+                        )
+                      : "No data"}
                   </div>
                 </td>
                 <td className="p-3 border-r border-r-blue-300">

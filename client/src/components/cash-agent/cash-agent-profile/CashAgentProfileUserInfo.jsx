@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useToasts } from "react-toast-notifications";
 import AddPaymentMethodandNumberforAgent from "./AddPaymentMethodandNumberforAgent";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
+import toast from "react-hot-toast";
 
 const CashAgentProfileUserInfo = ({
   id,
@@ -23,17 +23,12 @@ const CashAgentProfileUserInfo = ({
     formState: { errors },
   } = useForm();
 
-  const { addToast } = useToasts();
-
   const onSubmit = async (data) => {
     const { password, confirmPassword, ...updatedUser } = data;
 
     // Validate password and confirm password
     if (password !== confirmPassword) {
-      addToast("Passwords do not match!", {
-        appearance: "warning",
-        autoDismiss: true,
-      });
+      toast.error("Passwords do not match!");
       return;
     }
 
@@ -43,17 +38,10 @@ const CashAgentProfileUserInfo = ({
         id,
         data: { ...updatedUser, ...(password && { password }) }, // Conditionally include password
       }).unwrap();
-      addToast("Information updated successfully!", {
-        appearance: "success",
-        autoDismiss: true,
-      });
+      toast.success("Information updated successfully!");
     } catch (error) {
-      addToast(
-        error?.data?.message || "Failed to update Info. Please try again.",
-        {
-          appearance: "error",
-          autoDismiss: true,
-        }
+      toast.error(
+        error?.data?.message || "Failed to update Info. Please try again."
       );
     }
   };

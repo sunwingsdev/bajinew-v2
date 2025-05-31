@@ -7,11 +7,17 @@ import slider3 from "../../../assets/v2/image_222457.jpg";
 import slider4 from "../../../assets/v2/image_214956.jpg";
 import slider5 from "../../../assets/v2/image_176267.jpg";
 import slider6 from "../../../assets/v2/image_158140.jpg";
+import { useGetHomeControlsQuery } from "@/redux/features/allApis/homeControlApi/homeControlApi";
 
 const ImageSlider = () => {
+  const { data: homeControls } = useGetHomeControlsQuery();
+
+  const bannerImages = homeControls?.filter(
+    (control) => control.category === "slider" && control.isSelected === true
+  );
   const slides = [slider1, slider2, slider3, slider4, slider5, slider6];
   const [currentIndex, setCurrentIndex] = useState(1);
-  const totalSlides = slides.length;
+  const totalSlides = bannerImages?.length;
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -36,7 +42,7 @@ const ImageSlider = () => {
       {/* **Slider Container** */}
       <div className="relative mt-8 w-[80%] md:w-[50%] lg:w-[40%]">
         <div
-          className="flex transition-transform duration-500 ease-in-out w-[80%] md:w-[110%] lg:w-[110%] md:h-[250px] lg:h-[300px]"
+          className="flex transition-transform duration-500 ease-in-out w-[80%] md:w-[110%] lg:w-[110%] h-[150px] lg:h-[300px]"
           style={{
             transform: `translateX(calc(-${currentIndex * 100}% + ${
               window.innerWidth >= 768 && window.innerWidth < 1024
@@ -45,7 +51,7 @@ const ImageSlider = () => {
             }))`,
           }}
         >
-          {slides.map((item, index) => (
+          {bannerImages?.map((item, index) => (
             <div key={index} className="flex-none w-full flex justify-center">
               <div
                 className={`text-white rounded-lg shadow-lg ${
@@ -57,8 +63,7 @@ const ImageSlider = () => {
               >
                 <div className="grid grid-cols-1">
                   <img
-                    src={item}
-                    alt={item.title}
+                    src={`${import.meta.env.VITE_BASE_API_URL}${item?.image}`}
                     className="mx-auto rounded-lg"
                   />
                 </div>
