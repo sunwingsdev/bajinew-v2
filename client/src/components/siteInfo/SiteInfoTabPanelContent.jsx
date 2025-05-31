@@ -13,7 +13,7 @@ const SiteInfoTabPanelContent = ({ data }) => {
               {section?.text?.split("\n").map((line, i) => (
                 <p key={i} className="text-sm text-gray-400">
                   {line}
-                  <br />
+                  <br /> 
                 </p>
               ))}
             </div>
