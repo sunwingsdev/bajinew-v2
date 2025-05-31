@@ -374,7 +374,6 @@ const usersApi = (
 
     try {
       const user = await usersCollection.findOne({ _id: new ObjectId(id) });
-      console.log("req.user", req.user, "user", user);
 
       if (!user) {
         return res.status(404).json({ error: "User not found" });
@@ -385,8 +384,11 @@ const usersApi = (
       const result = await usersCollection.updateOne(
         { _id: new ObjectId(id) },
         {
+          $inc: {
+            balance: amountToAdd,
+            depositBalance: amountToAdd,
+          },
           $set: {
-            balance: updatedBalance,
             updatedAt: new Date(),
           },
         }
@@ -447,8 +449,11 @@ const usersApi = (
       const result = await usersCollection.updateOne(
         { _id: new ObjectId(id) },
         {
+          $inc: {
+            balance: -amountToSubtract,
+            withdrawBalance: amountToSubtract,
+          },
           $set: {
-            balance: updatedBalance,
             updatedAt: new Date(),
           },
         }
