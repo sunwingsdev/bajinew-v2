@@ -14,12 +14,7 @@ const AllUsers = () => {
 
   // Filtered users based on search query
   const filteredUsers = usersData
-    ?.filter(
-      (user) =>
-        user.role !== "admin" &&
-        user.role !== "cashagent" &&
-        user.role !== "affiliate"
-    )
+    ?.filter((user) => user.role === "user")
     ?.filter(
       (user) =>
         user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
