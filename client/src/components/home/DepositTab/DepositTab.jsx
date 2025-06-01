@@ -140,19 +140,17 @@ const DepositTab = () => {
       userInputs: dynamicInputs,
     };
 
-    console.log("dep inf", depositInfo);
-
-    // try {
-    //   const result = await addDeposit(depositInfo);
-    //   if (result.data.insertedId) {
-    //     toast.success(
-    //       "Amount depositted successfully. Please Wait for the response"
-    //     );
-    //     handleReset();
-    //   }
-    // } catch (error) {
-    //   toast.error("Failed to add a deposit");
-    // }
+    try {
+      const result = await addDeposit(depositInfo);
+      if (result.data.insertedId) {
+        toast.success(
+          "Amount depositted successfully. Please Wait for the response"
+        );
+        handleReset();
+      }
+    } catch (error) {
+      toast.error("Failed to add a deposit");
+    }
   };
 
   const togglePromotionDropdown = () => {
