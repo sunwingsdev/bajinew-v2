@@ -16,25 +16,20 @@ const DepositTab = () => {
   const [addDeposit] = useAddDepositMutation();
   const { data: allPaymentNumbers } = useGetAllPaymentNumbersQuery();
   const { data: promotions } = useGetPromotionsQuery();
-  console.log(promotions);
-  // console.log(allPaymentNumbers);
   const [selectedPromotion, setSelectedPromotion] = useState(null);
+  const [isPromotionDropdownOpen, setIsPromotionDropdownOpen] = useState(false);
   const [formData, setFormData] = useState({
     paymentMethod: null,
     depositChannel: null,
     amount: [],
-    senderNumber: "",
-    transactionId: "",
     promotion: selectedPromotion,
   });
 
   const [dynamicInputs, setDynamicInputs] = useState({});
 
-  // console.log(selectedPromotion);
   const [selectedNumber, setSelectedNumber] = useState(null);
 
   const { data: gateways } = useGetPaymentMethodsQuery();
-  // console.log(gateways);
 
   useEffect(() => {
     if (gateways && gateways?.length > 0) {
@@ -79,10 +74,11 @@ const DepositTab = () => {
   };
 
   const handlePaymentMethodChange = (method) => {
-    setFormData({
+    setFormData((prev) => ({
+      ...prev,
       paymentMethod: method,
       depositChannel: null,
-    });
+    }));
   };
 
   const handleReset = () => {
@@ -157,15 +153,8 @@ const DepositTab = () => {
     }
   };
 
-  // Function to return phone number based on selected channel
-  const getPhoneNumberByChannel = (channel) => {
-    const channelPhoneNumbers = {
-      apay: "+88015111111111",
-      cpay: "+88015222222222",
-
-      // Add more channels and numbers as needed
-    };
-    return channelPhoneNumbers[channel] || "+88015111111111"; // Default number if no match
+  const togglePromotionDropdown = () => {
+    setIsPromotionDropdownOpen((prev) => !prev);
   };
 
   const handleCopy = (text) => {
@@ -181,7 +170,7 @@ const DepositTab = () => {
           <h1 className="text-white">প্রোমশন</h1>
           <div
             className="flex justify-between items-center bg-yellow-500 p-2 rounded cursor-pointer"
-            onClick={() => setSelectedPromotion(!selectedPromotion)}
+            onClick={togglePromotionDropdown}
           >
             <h1>
               প্রোমশন{" "}
@@ -189,7 +178,7 @@ const DepositTab = () => {
                 {promotions?.length}
               </span>
             </h1>
-            {selectedPromotion ? (
+            {isPromotionDropdownOpen ? (
               <ChevronUp size={18} />
             ) : (
               <ChevronDown size={18} />
@@ -197,7 +186,7 @@ const DepositTab = () => {
           </div>
         </div>
 
-        {selectedPromotion && (
+        {isPromotionDropdownOpen && (
           <div className="z-10 grid grid-cols-4 gap-2 bg-gray-900 p-2 mt-2 rounded max-h-96 overflow-y-auto w-full shadow-lg">
             {promotions?.map((promo) => (
               <div

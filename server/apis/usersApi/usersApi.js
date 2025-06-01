@@ -49,7 +49,7 @@ const usersApi = (
       if (existingUser)
         return res.status(400).json({ error: "User already exists" });
       const hashedPassword = await bcrypt.hash(userInfo?.password, 10);
-      const newUser = { ...userInfo, password: hashedPassword };
+      const newUser = { ...userInfo, password: hashedPassword, role: "user" };
       newUser.createdAt = new Date();
       const result = await usersCollection.insertOne(newUser);
       res.status(201).send(result);
